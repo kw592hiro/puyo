@@ -1,0 +1,129 @@
+//
+window.addEventListener("load", () => {
+    //
+    initialize();
+
+    //
+    // const scale = window.innerHeight / (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
+    // document.body.style.transform = "scale(" + scale + ")";
+
+    //
+    gameLoop();
+});
+
+let gameState;
+let frame;
+let comboCount = 0;
+
+function initialize() {
+    //
+    GameImage.initialize();
+
+    //
+    Stage.initialize();
+
+    //
+    Player.initialize();
+
+    //
+    Score.initialize();
+
+    //
+    gameState = "start";
+    //
+    frame = 0;
+}
+
+function gameLoop() {
+    switch (gameState) {
+        case "start":
+            //
+            //
+            gameState = "checkFallingPuyo";
+            break;
+        case "checkFallingPuyo":
+            //
+            if (Stage.checkFallingPuyo()) {
+                gameState = "fallingPuyo";
+            } else {
+                gameState = "checkPuyoErase";
+            }
+            break;
+        case "fallingPuyo":
+            //
+            if (!Stage.fallPuyo()) {
+                gameState = "checkPuyoErase";
+            }
+            break;
+        case "checkPuyoErase":
+            //
+            const eraseInfo = Stage.checkPuyoErase(frame);
+            if (eraseInfo) {
+                gameState = "erasingPuyo";
+                comboCount++;
+                //
+                Score.addComboScore(comboCount, eraseInfo.piece, eraseInfo.color);
+                Stage.hideZenkeshi();
+            } else {
+                if (Stage.puyoCount ===0 && comboCount > 0) {
+                    //
+                    Stage.showZenkeshi();
+                    //
+                    Score.addScore(Config.zenkeshiBonus);
+                }
+                comboCount = 0;
+                gameState ="createPlayerPuyo";
+            }
+            break;
+        case "erasingPuyo":
+            //
+            if (!Stage.erasePuyo(frame)) {
+                //
+                gameState = "checkFallingPuyo";
+            }
+            break;
+        case "createPlayerPuyo":
+            //
+            if (!Player.createPlayerPuyo()) {
+                //
+                gameState = "gameOver";
+            } else {
+                //
+                gameState = "playing";
+            }
+            break;
+        case "playing":
+            //
+            const nextAction = Player.update(frame);
+            gameState = nextAction;
+            break;
+        case "fix":
+            //
+            Player.fixPlayerPuyo();
+            //
+            gameState = "checkFallingPuyo";
+            break;
+        case "moving":
+            //
+            if (Player.movePlayerPuyo(frame)) {
+                //
+                gameState = "playing";
+            }
+            break;
+        case "rotating":
+            if (Player.rotatePlayerPuyo(frame)) {
+                //
+                gameState = "playing";
+            }
+            break;
+        case "gameOver":
+            GameImage.prepareBatankyuAnimation(frame);
+            gameState = "batankyu";
+            break;
+        case "batankyu":
+            GameImage.updateBatankyu(frame);
+            break;
+    }
+    frame++;
+    setTimeout(gameLoop, 1000/60);
+}
