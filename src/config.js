@@ -2,7 +2,7 @@ class Config {
     static puyoImageWidth = 40;
     static puyoImageHeight = 40;
 
-    static btnHeight = 40;
+    static btnHeight = 80;
 
     static stageCols = 6;
     static stageRows = 12;
