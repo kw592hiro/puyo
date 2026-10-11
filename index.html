@@ -3,7 +3,7 @@
 
 <head>
     <title>ぷよぷよ風ゲーム </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
     <script src="https://cdn.jsdelivr.net/npm/web-console-log"></script>
     <script src="src/config.js"></script>
     <script src="src/stage.js"></script>
@@ -11,15 +11,32 @@
     <script src="src/image.js"></script>
     <script src="src/player.js"></script>
     <script src="src/score.js"></script>
+
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body style="margin: 0; transform-origin: 50% 0; user-select: none; -webkit-user-select: none; overflow: hidden">
-    <div id="next" style="position: relative; margin: 0 auto; overflow: hidden;">
+<body>
+    <div id="layout">
+        <div id="leftControls">
+            <div id="lrBtn">
+                <button class="btn" onclick="moveLeft()">←</button>
+                <button class="btn" onclick="moveRight()">→</button>
+            </div>
+            <button class="btn wide" onclick="softDrop()">↓</button>
+        </div>
+
+        <div id="gameStage">
+            <div id="next"></div>
+            <div id="stage"></div>
+            <div id="score"></div>
+        </div>
+
+        <div id="rightControls">
+            <button class="btn" onclick="rotateLeft()">⟲</button>
+            <button class="btn" onclick="rotateRight()">⟳</button>
+        </div>
     </div>
-    <div id="stage" style="position:relative; margin: 0 auto; overflow: hidden; background: url(img/puyo_4bg.png)">
-    </div>
-    <div id="score" style="position:relative; margin: 0 auto; overflow: hidden; text-align: right;">
-    </div>
+
     <div style="display:none">
         <img src="img/puyo_1.png" id="puyo_1">
         <img src="img/puyo_2.png" id="puyo_2">
