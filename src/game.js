@@ -4,8 +4,8 @@ window.addEventListener("load", () => {
     initialize();
 
     //
-    const scale = window.innerHeight / (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
-    document.body.style.transform = "scale(" + scale + ")";
+    // const scale = window.innerHeight / (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
+    // document.body.style.transform = "scale(" + scale + ")";
 
     //
     gameLoop();

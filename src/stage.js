@@ -17,9 +17,28 @@ class Stage {
         Stage.stageElement.style.height = Config.puyoImageHeight * Config.stageRows + 'px';
         Stage.stageElement.style.backgroundColor = Config.stageBackgroundColor;
 
+        // ボタンのサイズ指定
+        Stage.btnElement = document.getElementsByClassName('btn');
+        for (const btn of Stage.btnElement) {
+            btn.style.width = Config.btnHeight + 'px';
+            btn.style.height = Config.btnHeight + 'px';
+            btn.style.fontSize = Config.btnHeight * 0.4 + 'px';
+            btn.style.borderRadius = Config.btnHeight * 0.15 + 'px';
+            btn.style.boxShadow = '0 ' + Config.btnHeight * 0.05 + 'px ' + Config.btnHeight * 0.1 + 'px rgba(0,0,0,0.2)'
+        }
+        document.getElementsByClassName('wide')[0].style.width = Config.btnHeight * 1.5 + 'px'
+
+        document.getElementById("lrBtn").style.gap = Config.btnHeight * 0.4 + 'px';
+        document.getElementById("leftControls").style.gap = Config.btnHeight * 0.4 + 'px';
+        document.getElementById("rightControls").style.gap = Config.btnHeight * 0.4 + 'px';
+
+
+
+
         //
         const nextContainerElement = document.getElementById("next");
-        nextContainerElement.style.width = Config.puyoImageWidth * Config.stageCols + "px";
+        // nextContainerElement.style.width = Config.puyoImageWidth * Config.stageCols + "px";
+        nextContainerElement.style.width = Config.puyoImageWidth * 3 + "px";
         nextContainerElement.style.height = Config.puyoImageHeight * 2.2 + "px";
         nextContainerElement.style.backgroundColor = Config.nextBackgroundColor;
 
@@ -27,7 +46,8 @@ class Stage {
         const borderWidth = 2;
         Stage.nextElement = document.createElement("div");
         Stage.nextElement.style.position = "absolute";
-        Stage.nextElement.style.left = (Config.puyoImageWidth * (Config.stageCols -1)) /2 -borderWidth + "px";
+        // Stage.nextElement.style.left = (Config.puyoImageWidth * (Config.stageCols -1)) /2 -borderWidth + "px";
+        Stage.nextElement.style.left = Config.puyoImageWidth * 0.4 -borderWidth + "px";
         Stage.nextElement.style.top = (Config.puyoImageHeight * 0.1) - borderWidth + "px";
         Stage.nextElement.style.width = Config.puyoImageWidth * 1 +"px";
         Stage.nextElement.style.height = Config.puyoImageWidth * 2 +"px";
