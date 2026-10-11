@@ -5,7 +5,9 @@ window.addEventListener("load", () => {
 
     //
     const scale = window.innerHeight / (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
-    document.body.style.transform = "scale(" + scale + ")";
+    // document.body.style.transform = "scale(" + scale + ")";
+    document.getElementById("gameStage").style.transform = "scale(" + scale + ")";
+
 
     //
     gameLoop();
@@ -14,6 +16,21 @@ window.addEventListener("load", () => {
 let gameState;
 let frame;
 let comboCount = 0;
+
+
+function updateScreenSize() {
+  const screenW = screen.width;
+  const screenH = screen.height;
+
+  const viewW = window.innerWidth;
+  const viewH = window.innerHeight;
+
+  console.log("画面全体:", screenW, screenH);
+  console.log("表示領域:", viewW, viewH);
+}
+
+
+
 
 function initialize() {
     //
@@ -32,6 +49,9 @@ function initialize() {
     gameState = "start";
     //
     frame = 0;
+
+
+    updateScreenSize();
 }
 
 function gameLoop() {

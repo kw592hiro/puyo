@@ -28,9 +28,10 @@ class Stage {
         }
         document.getElementsByClassName('wide')[0].style.width = Config.btnHeight * 1.5 + 'px'
 
-        document.getElementById("lrBtn").style.gap = Config.btnHeight * 0.4 + 'px';
+        document.getElementById("lrBtn").style.gap = Config.btnHeight * 0.8 + 'px';
         document.getElementById("leftControls").style.gap = Config.btnHeight * 0.4 + 'px';
         document.getElementById("rightControls").style.gap = Config.btnHeight * 0.4 + 'px';
+
 
 
 
