@@ -1,6 +1,5 @@
 body {
     margin: 0;
-    /* transform-origin: 50% 0; */
     user-select: none;
     -webkit-user-select: none;
     overflow: hidden
@@ -31,11 +30,17 @@ body {
     background: url(img/puyo_4bg.png)
 }
 
-#subStage {
+#score {
+    position:relative;
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: right;
+}
+
+#mainStage {
     position: relative;
     margin: 0 auto;
     overflow: hidden;
-    align-items: flex-start;
 }
 
 #next {
@@ -44,31 +49,20 @@ body {
     overflow: hidden;
 }
 
-#score {
-    position:relative;
-    margin: 0 auto;
-    overflow: hidden;
-    text-align: right;
+#lrBtn {
+    display: flex;
+    flex-direction: row;
 }
 
 #leftControls {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 120px;
-    margin-bottom: 120px;
-}
-
-#lrBtn {
-    display: flex;
-    flex-direction: row;
 }
 
 #rightControls {
     display: flex;
     flex-direction: row;
-    margin-right: 120px;
-    margin-bottom: 180px;
 }
 
 .btn {

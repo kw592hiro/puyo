@@ -11,6 +11,7 @@
     <script src="src/image.js"></script>
     <script src="src/player.js"></script>
     <script src="src/score.js"></script>
+    <script src="src/controls.js"></script>
 
     <link rel="stylesheet" href="styles.css" />
 </head>
@@ -19,14 +20,16 @@
     <div id="layout">
         <div id="leftControls">
             <div id="lrBtn">
-                <button class="btn" onclick="moveLeft()">←</button>
-                <button class="btn" onclick="moveRight()">→</button>
+                <button class="btn" id = "btnLeft">←</button>
+                <button class="btn" id = "btnRight">→</button>
+                <!-- <button class="btn" onclick="moveLeft()">←</button>
+                <button class="btn" onclick="moveRight()">→</button> -->
             </div>
-            <button class="btn wide" onclick="softDrop()">↓</button>
+            <button class="btn wide" id = "btnDown">↓</button>
         </div>
 
         <div id="gameStage">
-            <div id="subStage">
+            <div id="mainStage">
                 <div id="stage"></div>
                 <div id="score"></div>
             </div>
@@ -34,8 +37,10 @@
         </div>
 
         <div id="rightControls">
-            <button class="btn" onclick="rotateLeft()">⟲</button>
-            <button class="btn" onclick="rotateRight()">⟳</button>
+            <button class="btn" id = "btnCcw">⟲</button>
+            <button class="btn" id = "btnCw">⟳</button>
+            <!-- <button class="btn" onclick="rotateLeft()">⟲</button>
+            <button class="btn" onclick="rotateRight()">⟳</button> -->
         </div>
     </div>
 
