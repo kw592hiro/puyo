@@ -16,26 +16,7 @@ class Stage {
         Stage.stageElement.style.width = Config.puyoImageWidth * Config.stageCols + 'px';
         Stage.stageElement.style.height = Config.puyoImageHeight * Config.stageRows + 'px';
         Stage.stageElement.style.backgroundColor = Config.stageBackgroundColor;
-
-        // ボタンのサイズ指定
-        Stage.btnElement = document.getElementsByClassName('btn');
-        for (const btn of Stage.btnElement) {
-            btn.style.width = Config.btnHeight + 'px';
-            btn.style.height = Config.btnHeight + 'px';
-            btn.style.fontSize = Config.btnHeight * 0.4 + 'px';
-            btn.style.borderRadius = Config.btnHeight * 0.15 + 'px';
-            btn.style.boxShadow = '0 ' + Config.btnHeight * 0.05 + 'px ' + Config.btnHeight * 0.1 + 'px rgba(0,0,0,0.2)'
-        }
-        document.getElementsByClassName('wide')[0].style.width = Config.btnHeight * 1.5 + 'px'
-
-        document.getElementById("lrBtn").style.gap = Config.btnHeight * 0.8 + 'px';
-        document.getElementById("leftControls").style.gap = Config.btnHeight * 0.4 + 'px';
-        document.getElementById("rightControls").style.gap = Config.btnHeight * 0.4 + 'px';
-
-
-
-
-
+ 
         //
         const nextContainerElement = document.getElementById("next");
         // nextContainerElement.style.width = Config.puyoImageWidth * Config.stageCols + "px";

@@ -18,8 +18,9 @@ class Player {
         Player.keyStatus = {
             right: false,
             left: false,
-            up: false,
-            down: false
+            down: false,
+            ccw: false,
+            cw: false
         };
         //
         document.addEventListener("keydown", (event) => {
@@ -30,7 +31,7 @@ class Player {
                     event.preventDefault();
                     return;
                 case "ArrowUp":
-                    Player.keyStatus.up = true;
+                    Player.keyStatus.ccw = true;
                     event.preventDefault();
                     return;
                 case "ArrowRight":
@@ -51,7 +52,7 @@ class Player {
                     event.preventDefault();
                     return;
                 case "ArrowUp":
-                    Player.keyStatus.up = false;
+                    Player.keyStatus.ccw = false;
                     event.preventDefault();
                     return;
                 case "ArrowRight":
@@ -64,57 +65,164 @@ class Player {
                     return;
             }
         });
-        //
-        let pageX = 0, pageY = 0;
-        //
-        document.addEventListener("touchstart", (event) => {
-            //
-            const touch = event.touches[0];
-            pageX = touch.pageX;
-            pageY = touch.pageY;
+
+
+    // スマホのタッチ対応
+    //     let pageX = 0, pageY = 0;
+    //     //
+    //     document.addEventListener("touchstart", (event) => {
+    //         //
+    //         const touch = event.touches[0];
+    //         pageX = touch.pageX;
+    //         pageY = touch.pageY;
+    //     });
+    //     //
+    //     document.addEventListener("touchmove", (event) => {
+    //         //
+    //         let {left, right, up, down} = Player.keyStatus;
+    //         //
+    //         if (left || right || down|| ccw || cw ) {
+    //             return;
+    //         }
+    //         //
+    //         const touch = event.touches[0];
+    //         const dx = touch.pageX - pageX;
+    //         const dy = touch.pageY - pageY;
+    //         if (dx**2 + dy**2 < 5**2) {
+    //             //
+    //             return;
+    //         }
+    //         //
+    //         if (Math.abs(dx) > Math.abs(dy)) {
+    //             if (dx > 0) {
+    //                 right = true;
+    //             } else {
+    //                 left = true;
+    //             }
+    //         } else {
+    //             if (dy > 0) {
+    //                 down = true;
+    //             } else {
+    //                 ccw = true;
+    //             }
+    //         }
+    //         Player.keyStatus = { left, right, down, ccw, cw };
+    //     });
+    //     //
+    //     document.addEventListener("touchend", (event) => {
+    //         Player.keyStatus = {
+    //             left: false,
+    //             right: false,
+    //             down: false,
+    //             ccw: false,
+    //             cw: false
+    //         };
+    //     });
+
+        // ボタン操作対応
+        document.getElementById("btnLeft").addEventListener("mousedown", () => {
+            Player.keyStatus.left = true;
+            document.preventDefault;
         });
-        //
-        document.addEventListener("touchmove", (event) => {
-            //
-            let {left, right, up, down} = Player.keyStatus;
-            //
-            if (left || right || up || down) {
-                return;
-            }
-            //
-            const touch = event.touches[0];
-            const dx = touch.pageX - pageX;
-            const dy = touch.pageY - pageY;
-            if (dx**2 + dy**2 < 5**2) {
-                //
-                return;
-            }
-            //
-            if (Math.abs(dx) > Math.abs(dy)) {
-                if (dx > 0) {
-                    right = true;
-                } else {
-                    left = true;
-                }
-            } else {
-                if (dy > 0) {
-                    down = true;
-                } else {
-                    up = true;
-                }
-            }
-            Player.keyStatus = { left, right, up, down };
+
+        document.getElementById("btnLeft").addEventListener("mouseup", () => {
+            Player.keyStatus.left = false;
+            document.preventDefault;
         });
-        //
-        document.addEventListener("touchend", (event) => {
-            Player.keyStatus = {
-                left: false,
-                right: false,
-                up: false,
-                down: false
-            };
+
+        document.getElementById("btnRight").addEventListener("mousedown", () => {
+            Player.keyStatus.right = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnRight").addEventListener("mouseup", () => {
+            Player.keyStatus.right = false;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnDown").addEventListener("mousedown", () => {
+            Player.keyStatus.down = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnDown").addEventListener("mouseup", () => {
+            Player.keyStatus.down = false;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnCcw").addEventListener("mousedown", () => {
+            Player.keyStatus.ccw = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnCcw").addEventListener("mouseup", () => {
+            Player.keyStatus.ccw = false;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnCw").addEventListener("mousedown", () => {
+            Player.keyStatus.cw = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnCw").addEventListener("mouseup", () => {
+            Player.keyStatus.cw = false;
+            document.preventDefault;
+        });
+
+
+        // タッチでボタン操作対応
+        document.getElementById("btnLeft").addEventListener("touchstart", () => {
+            Player.keyStatus.left = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnLeft").addEventListener("touchend", () => {
+            Player.keyStatus.left = false;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnRight").addEventListener("touchstart", () => {
+            Player.keyStatus.right = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnRight").addEventListener("touchend", () => {
+            Player.keyStatus.right = false;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnDown").addEventListener("touchstart", () => {
+            Player.keyStatus.down = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnDown").addEventListener("touchend", () => {
+            Player.keyStatus.down = false;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnCcw").addEventListener("touchstart", () => {
+            Player.keyStatus.ccw = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnCcw").addEventListener("touchend", () => {
+            Player.keyStatus.ccw = false;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnCw").addEventListener("touchstart", () => {
+            Player.keyStatus.cw = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnCw").addEventListener("touchend", () => {
+            Player.keyStatus.cw = false;
+            document.preventDefault;
         });
     }
+
 
     //
     static createPlayerPuyo() {
@@ -274,7 +382,7 @@ class Player {
                 Player.playerPuyoStatus.x += mx;
                 return "moving";
             }
-        } else if (Player.keyStatus.up) {
+        } else if (Player.keyStatus.ccw) {
             //
             //
             const x = Player.playerPuyoStatus.x;

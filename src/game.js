@@ -18,16 +18,17 @@ let frame;
 let comboCount = 0;
 
 
-function updateScreenSize() {
-  const screenW = screen.width;
-  const screenH = screen.height;
+// デバッグ用（画面サイズ表示）
+// function updateScreenSize() {
+//   const screenW = screen.width;
+//   const screenH = screen.height;
 
-  const viewW = window.innerWidth;
-  const viewH = window.innerHeight;
+//   const viewW = window.innerWidth;
+//   const viewH = window.innerHeight;
 
-  console.log("画面全体:", screenW, screenH);
-  console.log("表示領域:", viewW, viewH);
-}
+//   console.log("画面全体:", screenW, screenH);
+//   console.log("表示領域:", viewW, viewH);
+// }
 
 
 
@@ -45,13 +46,21 @@ function initialize() {
     //
     Score.initialize();
 
+    // 操作ボタン初期化
+    controls.initialize();
+
     //
     gameState = "start";
     //
     frame = 0;
 
 
-    updateScreenSize();
+    // デバッグ用（画面サイズ表示）
+    // updateScreenSize();
+    // console.log(document.getElementById("gameStage").offsetHeight)
+    // console.log(window.innerHeight)
+    // console.log(Config.controlsMarginBottom)
+    // console.log(Stage.leftControlsElement.style.marginBottom)
 }
 
 function gameLoop() {
