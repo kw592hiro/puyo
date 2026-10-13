@@ -31,8 +31,6 @@ let comboCount = 0;
 // }
 
 
-
-
 function initialize() {
     //
     GameImage.initialize();
@@ -139,8 +137,14 @@ function gameLoop() {
                 gameState = "playing";
             }
             break;
-        case "rotating":
-            if (Player.rotatePlayerPuyo(frame)) {
+        case "rotatingCcw":
+            if (Player.rotatePlayerPuyo(frame, 1)) {
+                //
+                gameState = "playing";
+            }
+            break;
+        case "rotatingCw":
+            if (Player.rotatePlayerPuyo(frame, -1)) {
                 //
                 gameState = "playing";
             }

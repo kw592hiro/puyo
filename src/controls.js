@@ -9,6 +9,11 @@ class controls {
             btn.style.borderRadius = Config.btnHeight * 0.15 + 'px';
             btn.style.boxShadow = '0 ' + Config.btnHeight * 0.05 + 'px ' + Config.btnHeight * 0.1 + 'px rgba(0,0,0,0.2)'
         }
+        
+        for (const btn of document.getElementsByClassName("tall")) {
+            btn.style.height = Config.btnHeight * 1.8 + 'px';
+        }
+
         document.getElementsByClassName('wide')[0].style.width = Config.btnHeight * 1.5 + 'px'
 
         document.getElementById("lrBtn").style.gap = Config.btnHeight * 0.8 + 'px';

@@ -382,7 +382,7 @@ class Player {
                 Player.playerPuyoStatus.x += mx;
                 return "moving";
             }
-        } else if (Player.keyStatus.ccw) {
+        } else if (Player.keyStatus.ccw || Player.keyStatus.cw) {
             //
             //
             const x = Player.playerPuyoStatus.x;
@@ -393,41 +393,83 @@ class Player {
 
             let cx = 0;
             let cy = 0;
-            if (rotation === 0) {
-                //
-            } else if (rotation === 90) {
-                //
-                //
-                if (Stage.getPuyoInfo(x-1, y)) {
+
+            if (Player.keyStatus.ccw) {
+                if (rotation === 0) {
                     //
-                    cx = 1;
+                } else if (rotation === 90) {
                     //
-                    if (Stage.getPuyoInfo(x+1, y)) {
-                        canRotate  = false;
-                    }
-                }
-            } else if (rotation === 180) {
-                //
-                //
-                if (Stage.getPuyoInfo(x, y+1)) {
-                    //
-                    cy = -1;
-                }
-                //
-                if (Stage.getPuyoInfo(x-1, y+1)) {
-                    //
-                    cy = -1;
-                }
-            } else if (rotation === 270) {
-                //
-                //
-                if (Stage.getPuyoInfo(x+1, y)) {
-                    //
-                    cx = -1;
                     //
                     if (Stage.getPuyoInfo(x-1, y)) {
                         //
-                        canRotate = false;
+                        cx = 1;
+                        //
+                        if (Stage.getPuyoInfo(x+1, y)) {
+                            canRotate  = false;
+                        }
+                    }
+                } else if (rotation === 180) {
+                    //
+                    //
+                    if (Stage.getPuyoInfo(x, y+1)) {
+                        //
+                        cy = -1;
+                    }
+                    //
+                    if (Stage.getPuyoInfo(x-1, y+1)) {
+                        //
+                        cy = -1;
+                    }
+                } else if (rotation === 270) {
+                    //
+                    //
+                    if (Stage.getPuyoInfo(x+1, y)) {
+                        //
+                        cx = -1;
+                        //
+                        if (Stage.getPuyoInfo(x-1, y)) {
+                            //
+                            canRotate = false;
+                        }
+                    }
+                }
+            } else {
+                if (rotation === 180) {
+                    //
+                } else if (rotation === 90) {
+                    //
+                    //
+                    if (Stage.getPuyoInfo(x+1, y)) {
+                        //
+                        cx = -1;
+                        //
+                        if (Stage.getPuyoInfo(x-1, y)) {
+                            canRotate  = false;
+                        }
+                    }
+                } else if (rotation === 0) {
+                    //
+                    //
+                    if (Stage.getPuyoInfo(x, y+1)) {
+                        //
+                        cy = -1;
+                    }
+                    //
+                    if (Stage.getPuyoInfo(x+1, y+1)) {
+                        //
+                        cy = -1;
+                    }
+                } else if (rotation === 270) {
+                    //
+                    //
+                    if (Stage.getPuyoInfo(x-1, y)) {
+                        //
+                        cx = 1;
+                        //
+                        if (Stage.getPuyoInfo(x+1, y)) {
+                            //
+                            canRotate = false;
+                        }
                     }
                 }
             }
@@ -449,11 +491,21 @@ class Player {
                 Player.rotateFromRotation = Player.playerPuyoStatus.rotation;
                 //
                 Player.playerPuyoStatus.x += cx;
-                const nextRotation = (Player.playerPuyoStatus.rotation + 90) % 360;
-                const dCombi = [[1, 0], [0, -1], [-1, 0], [0, 1]][nextRotation / 90];
+
+                if (Player.keyStatus.ccw) {
+                    Player.nextRotation = (Player.playerPuyoStatus.rotation + 90) % 360;
+                } else {
+                    Player.nextRotation = (Player.playerPuyoStatus.rotation + 270) % 360;
+                }
+                const dCombi = [[1, 0], [0, -1], [-1, 0], [0, 1]][Player.nextRotation / 90];
                 Player.playerPuyoStatus.dx = dCombi[0];
                 Player.playerPuyoStatus.dy = dCombi[1];
-                return "rotating";
+                
+                if (Player.keyStatus.ccw) {
+                    return "rotatingCcw";
+                } else {
+                    return "rotatingCw";
+                }
             }
         }
 
@@ -483,7 +535,7 @@ class Player {
     }
 
     //
-    static rotatePlayerPuyo(frame) {
+    static rotatePlayerPuyo(frame, rotateDirection) {
         //
         Player.dropPlayerPuyo(false);
 
@@ -494,7 +546,14 @@ class Player {
             ratio = 1;
         }
         Player.playerPuyoStatus.left = (Player.rotateAfterLeft - Player.rotateBeforeLeft) * ratio + Player.rotateBeforeLeft;
-        Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + ratio * 90) % 360;
+        
+        if (rotateDirection === 1) {
+            Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + ratio * 90) % 360;
+        } else {
+            Player.playerPuyoStatus.rotation = (Player.rotateFromRotation - ratio * 90 +360 ) % 360;
+        }
+        // Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + ratio * 90) % 360;
+        
         //
         Player.setPlayerPuyoPosition();
 
