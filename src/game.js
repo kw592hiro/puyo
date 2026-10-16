@@ -7,8 +7,7 @@ window.addEventListener("load", () => {
     const scale = window.innerHeight / (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
     // document.body.style.transform = "scale(" + scale + ")";
     document.getElementById("gameStage").style.transform = "scale(" + scale + ")";
-
-
+    
     //
     gameLoop();
 });
