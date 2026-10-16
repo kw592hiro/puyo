@@ -6,6 +6,27 @@ body {
     overflow: hidden
 }
 
+
+#rotate-message {
+  display: none;
+}
+
+@media (orientation: portrait) {
+
+  #rotate-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 30px;
+  }
+
+  #layout {
+    display: none;
+  }
+}
+
+
 #layout {
     display: flex;
     flex-direction: row;
