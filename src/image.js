@@ -1,5 +1,6 @@
 class GameImage {
     static puyoImageList = null;
+    static puyoNext2ndImageList = null;
     static digitImageList = null;
     static batankyuImage = null;
     static gameOverFrame = 0;
@@ -15,6 +16,16 @@ class GameImage {
             image.style.position = 'absolute';
             GameImage.puyoImageList[i] = image;
         }
+
+        GameImage.puyoNext2ndImageList = [];
+        for (let i = 0; i < Config.puyoColorMax; i++) {
+            const image = document.getElementById("puyo2nd_" + (i+1));
+            image.removeAttribute('id');
+            image.width = Config.puyoImageWidth * 0.8;
+            image.height = Config.puyoImageHeight * 0.8;
+            image.style.position = 'absolute';
+            GameImage.puyoNext2ndImageList[i] = image;
+        }   
 
         //
         GameImage.digitImageList = [];
@@ -39,6 +50,11 @@ class GameImage {
     //
     static getPuyoImage(color) {
         const image = GameImage.puyoImageList[color - 1].cloneNode(true);
+        return image;
+    }
+
+    static getPuyoNext2ndImage(color) {
+        const image = GameImage.puyoNext2ndImageList[color - 1].cloneNode(true);
         return image;
     }
 

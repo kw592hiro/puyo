@@ -29,8 +29,8 @@ class controls {
         Stage.rightControlsElement.style.marginRight = Config.controlsMarginSide + "px";
         Stage.rightControlsElement.style.marginBottom = leftControlsMarginBottom + (Stage.leftControlsElement.offsetHeight - Stage.rightControlsElement.offsetHeight) / 2 + 'px';
 
-        // デバッグ用（marginBottom値を取得と表示）
+        // デバッグ用
         // const testStyle = getComputedStyle(Stage.rightControlsElement);
-        // console.log(testStyle.marginBottom);
+        // console.log(testStyle.width, testStyle.height);
     }
 }
