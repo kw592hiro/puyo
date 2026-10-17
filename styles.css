@@ -6,6 +6,19 @@ body {
     overflow: hidden
 }
 
+@media (orientation: portrait) {
+
+  #rotate-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 30px;
+  }
+
+  #layout {
+    display: none;
+  }
 
 #rotate-message {
   display: none;
@@ -25,19 +38,6 @@ body {
     background: #ddd;
 } */
 
-@media (orientation: portrait) {
-
-  #rotate-message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 30px;
-  }
-
-  #layout {
-    display: none;
-  }
 
   #startBtn {
     display: none;
