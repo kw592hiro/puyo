@@ -2,15 +2,76 @@
 window.addEventListener("load", () => {
     //
     initialize();
+    clearBoard();
 
     //
     const scale = window.innerHeight / (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
-    // document.body.style.transform = "scale(" + scale + ")";
     document.getElementById("gameStage").style.transform = "scale(" + scale + ")";
     
 
-    // 開始時・リセット時のスタートボタン定義
+    // 辛さ（レベル）選択ボタン
+    const levelBtnsElement = document.getElementById("levelBtns");
+    const amakuchiElement = document.getElementById("amakuchi");
+    const chuukaraElement = document.getElementById("chuukara");
+    const karakuchiElement = document.getElementById("karakuchi");
+
     const startBtnElement = document.getElementById("startBtn");
+
+    amakuchiElement.addEventListener("click", () => {
+        levelBtnsElement.style.display = "none";
+        startBtnElement.style.display = "block";
+
+        resetInitialize();
+        Config.puyoColorMax = 3;
+        Stage.initialize();
+    });
+
+    amakuchiElement.addEventListener("touchstart", () => {
+        levelBtnsElement.style.display = "none";
+        startBtnElement.style.display = "block";
+
+        resetInitialize();
+        Config.puyoColorMax = 3;
+        Stage.initialize();
+    });
+
+    chuukaraElement.addEventListener("click", () => {
+        levelBtnsElement.style.display = "none";
+        startBtnElement.style.display = "block";
+
+        resetInitialize();
+        Config.puyoColorMax = 4;
+        Stage.initialize();
+    });
+
+    chuukaraElement.addEventListener("touchstart", () => {
+        levelBtnsElement.style.display = "none";
+        startBtnElement.style.display = "block";
+
+        resetInitialize();
+        Config.puyoColorMax = 4;
+        Stage.initialize();
+    });
+
+    karakuchiElement.addEventListener("click", () => {
+        levelBtnsElement.style.display = "none";
+        startBtnElement.style.display = "block";
+
+        resetInitialize();
+        Config.puyoColorMax = 5;
+        Stage.initialize();
+    });
+
+    karakuchiElement.addEventListener("touchstart", () => {
+        levelBtnsElement.style.display = "none";
+        startBtnElement.style.display = "block";
+
+        resetInitialize();
+        Config.puyoColorMax = 5;
+        Stage.initialize();
+    });
+
+    // 開始時・リセット時のスタートボタン定義    
     startBtnElement.addEventListener("click", () => {
         startBtnElement.style.display = "none";
         if (gameState === "start") {
@@ -33,18 +94,12 @@ window.addEventListener("load", () => {
     const resetBtnElement = document.getElementById("resetBtn");
     resetBtnElement.addEventListener("click", () => {
         resetBtnElement.style.display = "none";
-        resetInitialize();
-
-        document.getElementById("startBtn").style.display = "block";
-        gameState = "wait";
+        document.getElementById("levelBtns").style.display = "flex";
     });
 
     resetBtnElement.addEventListener("touchstart", () => {
         resetBtnElement.style.display = "none";
-        resetInitialize();
-
-        document.getElementById("startBtn").style.display = "block";
-        gameState = "wait";
+        document.getElementById("startBtn").style.display = "flex";
     });
 
     //
@@ -64,10 +119,6 @@ window.addEventListener("load", () => {
 //   console.log("表示領域:", viewW, viewH);
 // }
 
-
-// document.getElementById("startBtn").addEventListener("click", () => {
-//     gameLoop();
-// });
 
 let gameState;
 let frame;
@@ -199,10 +250,12 @@ function gameLoop() {
             
             if (frameBatankyu > 60) {
                 document.getElementById("resetBtn").style.display = "block";
+                gameState = "batankyu2"
             };
             break;
-        // case "wait":
-        //     break;
+        case "batankyu2":
+            GameImage.updateBatankyu(frame);
+            break;
     }
     frame++;
     setTimeout(gameLoop, 1000/60);
@@ -210,6 +263,14 @@ function gameLoop() {
 
 // リセット時の初期化
 function resetInitialize() {
+    clearBoard();
+    Score.initialize();
+    frame = 0;
+    frameBatankyu = 0;
+}
+
+// 画面のクリア
+function clearBoard() {
     // 盤面に残っているぷよの消去
     const children = Stage.stageElement.children;
     while (children.length > 1) {
@@ -217,16 +278,11 @@ function resetInitialize() {
     }
 
     // nextぷよ領域の削除
+    for (const element of Stage.nextPuyoElements) {
+        element.remove();
+    };
+    for (const element of Stage.next2ndPuyoElements) {
+        element.remove();
+    };
     document.getElementById("next").replaceChildren;
-
-    // GameImage.initialize();
-    Stage.initialize();
-    Player.initialize();
-    Score.initialize();
-    // controls.initialize();
-
-    gameState = "start";
-    //
-    frame = 0;
-    frameBatankyu = 0;
 }

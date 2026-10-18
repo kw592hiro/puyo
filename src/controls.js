@@ -17,12 +17,14 @@ class controls {
         document.getElementsByClassName('wide')[0].style.width = Config.btnHeight * 1.5 + 'px'
 
         document.getElementById("lrBtn").style.gap = Config.btnHeight * 0.8 + 'px';
+        document.getElementById("levelBtns").style.gap = Config.btnHeight * 0.4 + 'px';
 
         for (const btn of document.getElementsByClassName("startReset")) {
-            btn.style.width = Config.btnWidth * 8 + 'px';
+            btn.style.width = Config.btnWidth * 5 + 'px';
             btn.style.height = Config.btnHeight * 1.6 + 'px';
             btn.style.fontsize = Config.btnheight * 0.8 + 'px';
         }
+        document.getElementById("startBtn").style.display = "none";
         document.getElementById("resetBtn").style.display = "none";
 
         const leftControlsMarginBottom = document.getElementById("mainStage").offsetHeight - window.innerHeight + Config.controlsMarginBottom;

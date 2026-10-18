@@ -29,7 +29,7 @@ class Config {
         [0, 0, 0, 0, 0, 0]
     ];
 
-    static puyoColorMax = 4;    // ぷよの色数
+    static puyoColorMax = 5;    // ぷよの色数
     static fallingSpeed  = 5;   // 自由落下のスピード
     static erasePuyoCount = 4;  // ぷよが消える連結数
     static eraseAnimationFrames = 30;   // ぷよ消去アニメーションのフレーム数
