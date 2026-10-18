@@ -24,32 +24,35 @@
         ページを再読み込みしてください
     </div>
 
-    <div>
-        <button class = "startBtn"><h1>スタート！</h1></button>
-    </div>
-
-    <div id="layout">
-        <div id="leftControls">
-            <div id="lrBtn">
-                <button class="btn" id = "btnLeft">←</button>
-                <button class="btn" id = "btnRight">→</button>
+    <div id = "startScreen">
+        <div id="startOverlay">
+            <div>
+                <button class = "btn startReset" id = "startBtn">スタート！</button>
+                <button class = "btn startReset" id = "resetBtn">もういちど挑戦！</button>
             </div>
-            <button class="btn wide" id = "btnDown">↓</button>
         </div>
 
-        <div id="gameStage">
-            <div id="mainStage">
-                <div id="stage"></div>
-                <div id="score"></div>
+        <div id="layout">
+            <div id="leftControls">
+                <div id="lrBtn">
+                    <button class="btn" id = "btnLeft">←</button>
+                    <button class="btn" id = "btnRight">→</button>
+                </div>
+                <button class="btn wide" id = "btnDown">↓</button>
             </div>
-            <div id="next"></div>
-        </div>
 
-        <div id="rightControls">
-            <button class="btn tall" id = "btnCcw">⟲</button>
-            <button class="btn tall" id = "btnCw">⟳</button>
-            <!-- <button class="btn" onclick="rotateLeft()">⟲</button>
-            <button class="btn" onclick="rotateRight()">⟳</button> -->
+            <div id="gameStage">
+                <div id="mainStage">
+                    <div id="stage"></div>
+                    <div id="score"></div>
+                </div>
+                <div id="next"></div>
+            </div>
+
+            <div id="rightControls">
+                <button class="btn tall" id = "btnCcw">⟲</button>
+                <button class="btn tall" id = "btnCw">⟳</button>
+            </div>
         </div>
     </div>
 
