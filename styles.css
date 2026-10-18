@@ -39,6 +39,11 @@ body {
     z-index: 100;
 }
 
+#levelBtns {
+    display: flex;
+    flex-direction: column;
+}
+
 #layout {
     display: flex;
     flex-direction: row;
@@ -101,6 +106,7 @@ body {
     touch-action: none;
     border: none;
     background: #eee;
+    font-weight: bold;
 }
 
 .btn:active {
