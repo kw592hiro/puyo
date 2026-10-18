@@ -8,13 +8,48 @@ window.addEventListener("load", () => {
     // document.body.style.transform = "scale(" + scale + ")";
     document.getElementById("gameStage").style.transform = "scale(" + scale + ")";
     
-    //
-    gameLoop();
-});
 
-let gameState;
-let frame;
-let comboCount = 0;
+    // 開始時・リセット時のスタートボタン定義
+    const startBtnElement = document.getElementById("startBtn");
+    startBtnElement.addEventListener("click", () => {
+        startBtnElement.style.display = "none";
+        if (gameState === "start") {
+            gameLoop();
+        } else {
+            gameState = "start";
+        }
+    });
+
+    startBtnElement.addEventListener("touchstart", () => {
+        startBtnElement.style.display = "none";
+        if (gameState === "start") {
+            gameLoop();
+        } else {
+            gameState = "start";
+        }
+    });
+
+    // ゲームオーバー時のリセットボタン定義
+    const resetBtnElement = document.getElementById("resetBtn");
+    resetBtnElement.addEventListener("click", () => {
+        resetBtnElement.style.display = "none";
+        resetInitialize();
+
+        document.getElementById("startBtn").style.display = "block";
+        gameState = "wait";
+    });
+
+    resetBtnElement.addEventListener("touchstart", () => {
+        resetBtnElement.style.display = "none";
+        resetInitialize();
+
+        document.getElementById("startBtn").style.display = "block";
+        gameState = "wait";
+    });
+
+    //
+    // gameLoop();
+});
 
 
 // デバッグ用（画面サイズ表示）
@@ -29,6 +64,15 @@ let comboCount = 0;
 //   console.log("表示領域:", viewW, viewH);
 // }
 
+
+// document.getElementById("startBtn").addEventListener("click", () => {
+//     gameLoop();
+// });
+
+let gameState;
+let frame;
+let comboCount = 0;
+let frameBatankyu;
 
 function initialize() {
     //
@@ -50,14 +94,11 @@ function initialize() {
     gameState = "start";
     //
     frame = 0;
+    frameBatankyu = 0;
 
 
     // デバッグ用（画面サイズ表示）
     // updateScreenSize();
-    // console.log(document.getElementById("gameStage").offsetHeight)
-    // console.log(window.innerHeight)
-    // console.log(Config.controlsMarginBottom)
-    // console.log(Stage.leftControlsElement.style.marginBottom)
 }
 
 function gameLoop() {
@@ -153,9 +194,39 @@ function gameLoop() {
             gameState = "batankyu";
             break;
         case "batankyu":
+            frameBatankyu++;
             GameImage.updateBatankyu(frame);
+            
+            if (frameBatankyu > 60) {
+                document.getElementById("resetBtn").style.display = "block";
+            };
             break;
+        // case "wait":
+        //     break;
     }
     frame++;
     setTimeout(gameLoop, 1000/60);
+}
+
+// リセット時の初期化
+function resetInitialize() {
+    // 盤面に残っているぷよの消去
+    const children = Stage.stageElement.children;
+    while (children.length > 1) {
+        children[1].remove();
+    }
+
+    // nextぷよ領域の削除
+    document.getElementById("next").replaceChildren;
+
+    // GameImage.initialize();
+    Stage.initialize();
+    Player.initialize();
+    Score.initialize();
+    // controls.initialize();
+
+    gameState = "start";
+    //
+    frame = 0;
+    frameBatankyu = 0;
 }

@@ -3,7 +3,8 @@ class Stage {
     static puyoBoard = null;
     static puyoCount = 0;
     static fallingPuyoInfoList = [];
-    static erasingStartFrame = 0;
+    // static erasingStartFrame = 0;
+    static eraseStartFrame = 0;
     static erasingInfoList = [];
     static zenkeshiImage = null;
     static nextElement = null;
@@ -22,7 +23,6 @@ class Stage {
  
         //
         const nextContainerElement = document.getElementById("next");
-        // nextContainerElement.style.width = Config.puyoImageWidth * Config.stageCols + "px";
         nextContainerElement.style.width = Config.puyoImageWidth * 2.6 + "px";
         nextContainerElement.style.height = Config.puyoImageHeight * 2.2 + "px";
         nextContainerElement.style.backgroundColor = Config.nextBackgroundColor;
@@ -31,7 +31,6 @@ class Stage {
         const borderWidth = 2;
         Stage.nextElement = document.createElement("div");
         Stage.nextElement.style.position = "absolute";
-        // Stage.nextElement.style.left = (Config.puyoImageWidth * (Config.stageCols -1)) /2 -borderWidth + "px";
         Stage.nextElement.style.left = Config.puyoImageWidth * 0.4 -borderWidth + "px";
         Stage.nextElement.style.top = (Config.puyoImageHeight * 0.1) - borderWidth + "px";
         Stage.nextElement.style.width = Config.puyoImageWidth * 1 +"px";
@@ -88,7 +87,7 @@ class Stage {
         Stage.nextPuyoElements = [];
         Stage.next2ndPuyoColors = [];
         Stage.next2ndPuyoElements = [];
-        Stage.getnext2ndPuyoColors();
+        Stage.getNext2ndPuyoColors();
         Stage.getNextPuyoColors();
     }
 
@@ -96,7 +95,7 @@ class Stage {
     static getNextPuyoColors() {
         //
         const ret = Stage.nextPuyoColors;
-        Stage.nextPuyoColors = Stage.getnext2ndPuyoColors();
+        Stage.nextPuyoColors = Stage.getNext2ndPuyoColors();
  
         //
         if (ret.length) {
@@ -105,17 +104,28 @@ class Stage {
             for (const element of Stage.nextPuyoElements) {
                 element.remove();
             }
-           //
-            const nextCenterPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[0]);
-            const nextRotatingPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[1]);
-            nextCenterPuyoElement.style.top = Config.puyoImageHeight + "px";
-            Stage.nextElement.append(nextCenterPuyoElement, nextRotatingPuyoElement);
-            Stage.nextPuyoElements = [nextCenterPuyoElement, nextRotatingPuyoElement];
-        }
+            //
+            // const nextCenterPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[0]);
+            // const nextRotatingPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[1]);
+            // nextCenterPuyoElement.style.top = Config.puyoImageHeight + "px";
+            // Stage.nextElement.append(nextCenterPuyoElement, nextRotatingPuyoElement);
+            // Stage.nextPuyoElements = [nextCenterPuyoElement, nextRotatingPuyoElement];
+        } else {
+            const nextCenterPuyoColor = Math.trunc(Math.random() * Config.puyoColorMax) + 1;
+            const nextRotatingPuyoColor = Math.trunc(Math.random() * Config.puyoColorMax) + 1;
+            Stage.nextPuyoColors = [nextCenterPuyoColor, nextRotatingPuyoColor];
+        };
+
+        const nextCenterPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[0]);
+        const nextRotatingPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[1]);
+        nextCenterPuyoElement.style.top = Config.puyoImageHeight + "px";
+        Stage.nextElement.append(nextCenterPuyoElement, nextRotatingPuyoElement);
+        Stage.nextPuyoElements = [nextCenterPuyoElement, nextRotatingPuyoElement];
+
         return ret;
     }
 
-    static getnext2ndPuyoColors() {
+    static getNext2ndPuyoColors() {
         const ret2nd = Stage.next2ndPuyoColors;
 
         const next2ndCenterPuyoColor = Math.trunc(Math.random() * Config.puyoColorMax) + 1;
