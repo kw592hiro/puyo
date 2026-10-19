@@ -6,27 +6,34 @@ body {
     overflow: hidden
 }
 
-@media (orientation: portrait) {
-
-  #rotate-message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 30px;
-  }
-
-  #startScreen {
-    display: none;
-  }
+/* ボタンclassの書式設定 */
+.btn {
+    touch-action: none;
+    border: none;
+    background: #eee;
+    font-weight: bold;
 }
 
+.btn:active {
+    background: #ddd;
+}
+
+.startReset {
+    display: flex;
+    border: none;
+    /* background: #eee; */
+    background-color: rgba(238, 238, 238, 0.8);
+    align-items: center;
+    justify-content: center;
+}
+
+/* 要素の表示設定 */
 #rotate-message {
   display: none;
 }
 
 #startScreen {
-    display: block;
+    display: flex;
     /* position: relative; */
     /* width: fit-content; */
 }
@@ -51,6 +58,17 @@ body {
     align-items:flex-end ;
 }
 
+#leftControls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#lrBtn {
+    display: flex;
+    flex-direction: row;
+}
+
 #gameStage {
     display: flex;
     flex-direction: row;
@@ -58,6 +76,12 @@ body {
     margin: 0 auto;
     overflow: hidden;
     transform-origin: 50% 0;
+}
+
+#mainStage {
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 #stage {
@@ -74,27 +98,10 @@ body {
     text-align: right;
 }
 
-#mainStage {
-    position: relative;
-    margin: 0 auto;
-    overflow: hidden;
-}
-
 #next {
     position: relative;
     margin: 0 auto;
     overflow: hidden;
-}
-
-#lrBtn {
-    display: flex;
-    flex-direction: row;
-}
-
-#leftControls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 #rightControls {
@@ -102,22 +109,18 @@ body {
     flex-direction: row;
 }
 
-.btn {
-    touch-action: none;
-    border: none;
-    background: #eee;
-    font-weight: bold;
-}
+/* 縦向き・横向きに応じて表示 */
+@media (orientation: portrait) {
 
-.btn:active {
-    background: #ddd;
-}
-
-.startReset {
+  #rotate-message {
     display: flex;
-    border: none;
-    /* background: #eee; */
-    background-color: rgba(238, 238, 238, 0.8);
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 30px;
+  }
+
+  #startScreen {
+    display: none;
+  }
 }
