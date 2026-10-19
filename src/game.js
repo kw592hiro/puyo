@@ -92,6 +92,7 @@ window.addEventListener("load", () => {
 
     // ゲームオーバー時のリセットボタン定義
     const resetBtnElement = document.getElementById("resetBtn");
+
     resetBtnElement.addEventListener("click", () => {
         resetBtnElement.style.display = "none";
         document.getElementById("levelBtns").style.display = "flex";
@@ -99,7 +100,7 @@ window.addEventListener("load", () => {
 
     resetBtnElement.addEventListener("touchstart", () => {
         resetBtnElement.style.display = "none";
-        document.getElementById("startBtn").style.display = "flex";
+        document.getElementById("levelBtns").style.display = "flex";
     });
 
     //
