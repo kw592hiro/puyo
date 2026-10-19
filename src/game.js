@@ -28,7 +28,11 @@ window.addEventListener("load", () => {
 
     amakuchiElement.addEventListener("touchstart", () => {
         levelBtnsElement.style.display = "none";
-        startBtnElement.style.display = "block";
+
+        setTimeout(() => {
+            startBtnElement.style.display = "block";
+        }, 300);
+        // startBtnElement.style.display = "block";
 
         resetInitialize();
         Config.puyoColorMax = 3;
@@ -46,7 +50,11 @@ window.addEventListener("load", () => {
 
     chuukaraElement.addEventListener("touchstart", () => {
         levelBtnsElement.style.display = "none";
-        startBtnElement.style.display = "block";
+
+        setTimeout(() => {
+            startBtnElement.style.display = "block";
+        }, 300);
+        // startBtnElement.style.display = "block";
 
         resetInitialize();
         Config.puyoColorMax = 4;
@@ -64,7 +72,11 @@ window.addEventListener("load", () => {
 
     karakuchiElement.addEventListener("touchstart", () => {
         levelBtnsElement.style.display = "none";
-        startBtnElement.style.display = "block";
+
+        setTimeout(() => {
+            startBtnElement.style.display = "block";
+        }, 300);
+        // startBtnElement.style.display = "block";
 
         resetInitialize();
         Config.puyoColorMax = 5;
