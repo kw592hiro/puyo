@@ -33,7 +33,7 @@ body {
 }
 
 #startScreen {
-    display: flex;
+    display: absolute;
     /* position: relative; */
     /* width: fit-content; */
 }
