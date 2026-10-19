@@ -90,7 +90,7 @@ window.addEventListener("load", () => {
         }
     });
 
-    // ゲームオーバー時のリセットボタン定義
+    // ゲームオーバー時の「もういちど」ボタン定義
     const resetBtnElement = document.getElementById("resetBtn");
 
     resetBtnElement.addEventListener("click", () => {
@@ -98,7 +98,8 @@ window.addEventListener("load", () => {
         document.getElementById("levelBtns").style.display = "flex";
     });
 
-    resetBtnElement.addEventListener("touchstart", () => {
+    resetBtnElement.addEventListener("touchend", () => {
+        frameResetBtn = 0;
         resetBtnElement.style.display = "none";
         document.getElementById("levelBtns").style.display = "flex";
     });
@@ -147,6 +148,7 @@ function initialize() {
     //
     frame = 0;
     frameBatankyu = 0;
+    frameResetBtn = 0;
 
 
     // デバッグ用（画面サイズ表示）
