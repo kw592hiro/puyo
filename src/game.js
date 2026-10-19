@@ -98,11 +98,20 @@ window.addEventListener("load", () => {
         document.getElementById("levelBtns").style.display = "flex";
     });
 
-    resetBtnElement.addEventListener("touchend", () => {
-        frameResetBtn = 0;
+    // resetBtnElement.addEventListener("touchend", () => {
+    //     resetBtnElement.style.display = "none";
+    //     document.getElementById("levelBtns").style.display = "flex";
+    // });
+
+
+    resetBtnElement.addEventListener("touchstart", () => {
         resetBtnElement.style.display = "none";
-        document.getElementById("levelBtns").style.display = "flex";
+
+        setTimeout(() => {
+            document.getElementById("levelBtns").style.display = "flex";    
+        }, 300);
     });
+
 
     //
     // gameLoop();
