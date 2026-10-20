@@ -1,6 +1,7 @@
 class GameImage {
     static puyoImageList = null;
     static puyoNext2ndImageList = null;
+    static randomNumbersList = null;
     static digitImageList = null;
     static batankyuImage = null;
     static gameOverFrame = 0;
@@ -25,7 +26,7 @@ class GameImage {
             image.height = Config.puyoImageHeight * 0.8;
             image.style.position = 'absolute';
             GameImage.puyoNext2ndImageList[i] = image;
-        }   
+        }
 
         //
         GameImage.digitImageList = [];
@@ -47,6 +48,27 @@ class GameImage {
         GameImage.batankyuImage.style.position = "absolute";
     }
 
+
+    // ぷよ色をランダムに並び替えるための関数群
+    static createRandomList() { 
+        const numbers = [0, 1, 2, 3, 4];
+        for (let i = numbers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+        }
+        GameImage.randomNumbersList = numbers;
+    }
+
+    static randomSort(imageList, numbersList) {
+        const imageListSort = [];
+
+        for (let i = 0; i < imageList.length; i++) {
+            imageListSort[i] = imageList[numbersList[i]];
+        }
+        return imageListSort;
+    }
+    
+
     //
     static getPuyoImage(color) {
         const image = GameImage.puyoImageList[color - 1].cloneNode(true);
@@ -58,6 +80,7 @@ class GameImage {
         return image;
     }
 
+    
     //
     static getDigitImage(digit) {
         const image = GameImage.digitImageList[digit].cloneNode(true);

@@ -32,7 +32,6 @@ window.addEventListener("load", () => {
         setTimeout(() => {
             startBtnElement.style.display = "block";
         }, 300);
-        // startBtnElement.style.display = "block";
 
         resetInitialize();
         Config.puyoColorMax = 3;
@@ -54,7 +53,6 @@ window.addEventListener("load", () => {
         setTimeout(() => {
             startBtnElement.style.display = "block";
         }, 300);
-        // startBtnElement.style.display = "block";
 
         resetInitialize();
         Config.puyoColorMax = 4;
@@ -76,7 +74,6 @@ window.addEventListener("load", () => {
         setTimeout(() => {
             startBtnElement.style.display = "block";
         }, 300);
-        // startBtnElement.style.display = "block";
 
         resetInitialize();
         Config.puyoColorMax = 5;
@@ -110,12 +107,6 @@ window.addEventListener("load", () => {
         document.getElementById("levelBtns").style.display = "flex";
     });
 
-    // resetBtnElement.addEventListener("touchend", () => {
-    //     resetBtnElement.style.display = "none";
-    //     document.getElementById("levelBtns").style.display = "flex";
-    // });
-
-
     resetBtnElement.addEventListener("touchstart", () => {
         resetBtnElement.style.display = "none";
 
@@ -123,7 +114,6 @@ window.addEventListener("load", () => {
             document.getElementById("levelBtns").style.display = "flex";    
         }, 300);
     });
-
 
     //
     // gameLoop();
@@ -291,6 +281,11 @@ function resetInitialize() {
     Score.initialize();
     frame = 0;
     frameBatankyu = 0;
+
+    // ぷよ色のランダム化
+    GameImage.createRandomList();
+    GameImage.puyoImageList = GameImage.randomSort(GameImage.puyoImageList, GameImage.randomNumbersList);
+    GameImage.puyoNext2ndImageList = GameImage.randomSort(GameImage.puyoNext2ndImageList, GameImage.randomNumbersList);
 }
 
 // 画面のクリア

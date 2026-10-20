@@ -105,11 +105,6 @@ class Stage {
                 element.remove();
             }
             //
-            // const nextCenterPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[0]);
-            // const nextRotatingPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[1]);
-            // nextCenterPuyoElement.style.top = Config.puyoImageHeight + "px";
-            // Stage.nextElement.append(nextCenterPuyoElement, nextRotatingPuyoElement);
-            // Stage.nextPuyoElements = [nextCenterPuyoElement, nextRotatingPuyoElement];
         } else {
             const nextCenterPuyoColor = Math.trunc(Math.random() * Config.puyoColorMax) + 1;
             const nextRotatingPuyoColor = Math.trunc(Math.random() * Config.puyoColorMax) + 1;
