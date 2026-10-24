@@ -3,7 +3,6 @@ class Stage {
     static puyoBoard = null;
     static puyoCount = 0;
     static fallingPuyoInfoList = [];
-    // static erasingStartFrame = 0;
     static eraseStartFrame = 0;
     static erasingInfoList = [];
     static zenkeshiImage = null;
@@ -18,7 +17,7 @@ class Stage {
         //
         Stage.stageElement = document.getElementById("stage");
         Stage.stageElement.style.width = Config.puyoImageWidth * Config.stageCols + 'px';
-        Stage.stageElement.style.height = Config.puyoImageHeight * Config.stageRows + 'px';
+        Stage.stageElement.style.height = Config.puyoImageHeight * (Config.stageRows-1) + 'px';
         Stage.stageElement.style.backgroundColor = Config.stageBackgroundColor;
  
         //
@@ -132,8 +131,13 @@ class Stage {
                 element.remove();
             }
 
-            const next2ndCenterPuyoElement = GameImage.getPuyoNext2ndImage(next2ndCenterPuyoColor);
-            const next2ndRotatingPuyoElement = GameImage.getPuyoNext2ndImage(next2ndRotatingPuyoColor);
+            const next2ndCenterPuyoElement = GameImage.getPuyoImage(next2ndCenterPuyoColor);
+            const next2ndRotatingPuyoElement = GameImage.getPuyoImage(next2ndRotatingPuyoColor);
+            next2ndCenterPuyoElement.width = Config.puyoImageWidth * 0.8;
+            next2ndCenterPuyoElement.height = Config.puyoImageHeight * 0.8;
+            next2ndRotatingPuyoElement.width = Config.puyoImageWidth * 0.8;
+            next2ndRotatingPuyoElement.height = Config.puyoImageHeight * 0.8;
+
             next2ndCenterPuyoElement.style.top = Config.puyoImageHeight * 0.8 + "px";
             Stage.next2ndElement.append(next2ndCenterPuyoElement, next2ndRotatingPuyoElement);
             Stage.next2ndPuyoElements = [next2ndCenterPuyoElement, next2ndRotatingPuyoElement];
@@ -146,7 +150,7 @@ class Stage {
         //
         const puyoImage = GameImage.getPuyoImage(puyoColor);
         puyoImage.style.left = x * Config.puyoImageWidth + "px";
-        puyoImage.style.top = y * Config.puyoImageHeight + "px";
+        puyoImage.style.top = (y - 1) * Config.puyoImageHeight + "px";
         Stage.stageElement.appendChild(puyoImage);
 
         //
@@ -214,7 +218,8 @@ class Stage {
                     Stage.fallingPuyoInfoList.push({
                         element: currentPuyoInfo.element,
                         position: y*Config.puyoImageHeight,
-                        destination: destination*Config.puyoImageHeight,
+                        // destination: destination*Config.puyoImageHeight,
+                        destination: (destination - 1)*Config.puyoImageHeight,
                         falling: true
                     });
                 }

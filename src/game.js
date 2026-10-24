@@ -121,16 +121,16 @@ window.addEventListener("load", () => {
 
 
 // デバッグ用（画面サイズ表示）
-// function updateScreenSize() {
-//   const screenW = screen.width;
-//   const screenH = screen.height;
+function updateScreenSize() {
+  const screenW = screen.width;
+  const screenH = screen.height;
 
-//   const viewW = window.innerWidth;
-//   const viewH = window.innerHeight;
+  const viewW = window.innerWidth;
+  const viewH = window.innerHeight;
 
-//   console.log("画面全体:", screenW, screenH);
-//   console.log("表示領域:", viewW, viewH);
-// }
+  console.log("画面全体:", screenW, screenH);
+  console.log("表示領域:", viewW, viewH);
+}
 
 
 let gameState;
@@ -159,11 +159,10 @@ function initialize() {
     //
     frame = 0;
     frameBatankyu = 0;
-    frameResetBtn = 0;
 
 
     // デバッグ用（画面サイズ表示）
-    // updateScreenSize();
+    updateScreenSize();
 }
 
 function gameLoop() {
@@ -283,9 +282,7 @@ function resetInitialize() {
     frameBatankyu = 0;
 
     // ぷよ色のランダム化
-    GameImage.createRandomList();
-    GameImage.puyoImageList = GameImage.randomSort(GameImage.puyoImageList, GameImage.randomNumbersList);
-    GameImage.puyoNext2ndImageList = GameImage.randomSort(GameImage.puyoNext2ndImageList, GameImage.randomNumbersList);
+    GameImage.randomPuyoColor();
 }
 
 // 画面のクリア

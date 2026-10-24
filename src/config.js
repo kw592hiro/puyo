@@ -8,26 +8,27 @@ class Config {
     static controlsMarginBottom = 50;
 
     static stageCols = 6;
-    static stageRows = 12;
+    static stageRows = 13;
     static stageBackgroundColor = '#11213b';
     static nextBackgroundColor = '#e2a9c8';
     static scoreBackgroundColor = '#24c0bb';
 
     //
-    static initialBoard = [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-    ];
+    // static initialBoard = [
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0]
+    // ];
 
     static puyoColorMax = 5;    // ぷよの色数
     static fallingSpeed  = 5;   // 自由落下のスピード
