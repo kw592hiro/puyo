@@ -250,7 +250,8 @@ class Player {
             // y: -1,
             y: 0,
             left: 2 * Config.puyoImageWidth,
-            top: -1 * Config.puyoImageHeight,
+            // top: -1 * Config.puyoImageHeight,
+            top: 0 * Config.puyoImageHeight,
             dx: 0,
             dy: -1,
             rotation: 90
@@ -287,8 +288,8 @@ class Player {
                 Player.playerPuyoStatus.top += Config.playerDownSpeed;
             }
             //
-            // if (Math.floor(Player.playerPuyoStatus.top / Config.puyoImageHeight) != y) {
-            if (Math.floor(Player.playerPuyoStatus.top / Config.puyoImageHeight) != (y - 1)) {
+            if (Math.floor(Player.playerPuyoStatus.top / Config.puyoImageHeight) != y) {
+            // if (Math.floor(Player.playerPuyoStatus.top / Config.puyoImageHeight) != (y - 1)) {
                 //
                 y += 1;
                 Player.playerPuyoStatus.y = y;
@@ -303,8 +304,8 @@ class Player {
                     return false;
                 } else {
                     //
-                    // Player.playerPuyoStatus.top = y * Config.puyoImageHeight;
-                    Player.playerPuyoStatus.top = (y - 1) * Config.puyoImageHeight;
+                    Player.playerPuyoStatus.top = y * Config.puyoImageHeight;
+                    // Player.playerPuyoStatus.top = (y - 1) * Config.puyoImageHeight;
                     Player.groundedFrame = 1;
                     return false;
                 }

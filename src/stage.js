@@ -1,5 +1,6 @@
 class Stage {
     static stageElement = null;
+    static batsuElement = null;
     static puyoBoard = null;
     static puyoCount = 0;
     static fallingPuyoInfoList = [];
@@ -17,8 +18,16 @@ class Stage {
         //
         Stage.stageElement = document.getElementById("stage");
         Stage.stageElement.style.width = Config.puyoImageWidth * Config.stageCols + 'px';
-        Stage.stageElement.style.height = Config.puyoImageHeight * (Config.stageRows-1) + 'px';
+        Stage.stageElement.style.height = Config.puyoImageHeight * Config.stageRows + 'px';
+        // Stage.stageElement.style.height = Config.puyoImageHeight * (Config.stageRows-1) + 'px';
         Stage.stageElement.style.backgroundColor = Config.stageBackgroundColor;
+
+        // // 3列目最上段のバツ印の指定
+        Stage.batsuElement = document.getElementById("batsu");
+        Stage.batsuElement.style.width = Config.puyoImageWidth + 'px';
+        Stage.batsuElement.style.height = Config.puyoImageHeight + 'px';
+        Stage.batsuElement.style.left = Config.puyoImageWidth * 2 + 'px';
+        Stage.batsuElement.style.top = Config.puyoImageHeight + 'px';
  
         //
         const nextContainerElement = document.getElementById("next");
@@ -150,7 +159,8 @@ class Stage {
         //
         const puyoImage = GameImage.getPuyoImage(puyoColor);
         puyoImage.style.left = x * Config.puyoImageWidth + "px";
-        puyoImage.style.top = (y - 1) * Config.puyoImageHeight + "px";
+        puyoImage.style.top = y * Config.puyoImageHeight + "px";
+        // puyoImage.style.top = (y - 1) * Config.puyoImageHeight + "px";
         Stage.stageElement.appendChild(puyoImage);
 
         //
@@ -218,8 +228,8 @@ class Stage {
                     Stage.fallingPuyoInfoList.push({
                         element: currentPuyoInfo.element,
                         position: y*Config.puyoImageHeight,
-                        // destination: destination*Config.puyoImageHeight,
-                        destination: (destination - 1)*Config.puyoImageHeight,
+                        destination: destination*Config.puyoImageHeight,
+                        // destination: (destination - 1)*Config.puyoImageHeight,
                         falling: true
                     });
                 }

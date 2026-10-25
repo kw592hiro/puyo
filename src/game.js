@@ -5,7 +5,9 @@ window.addEventListener("load", () => {
     clearBoard();
 
     //
-    const scale = window.innerHeight / (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
+    const scale = window.innerHeight / 
+                    (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight- Config.puyoImageHeight);
+                    // (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
     document.getElementById("gameStage").style.transform = "scale(" + scale + ")";
     
 
@@ -289,8 +291,8 @@ function resetInitialize() {
 function clearBoard() {
     // 盤面に残っているぷよの消去
     const children = Stage.stageElement.children;
-    while (children.length > 1) {
-        children[1].remove();
+    while (children.length > 2) {
+        children[2].remove();
     }
 
     // nextぷよ領域の削除
