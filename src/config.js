@@ -5,7 +5,7 @@ class Config {
     static btnHeight = 50;
     static btnWidth = 50;
     static controlsSideMargin = 10;
-    static controlsTopMargin = 65;
+    static controlsTopMargin = 55;
 
     static stageCols = 6;
     static stageRows = 13;
