@@ -20,48 +20,49 @@
 
 <body>
     <div id="rotate-message">
-        端末を横向きにして<br>
-        ページを再読み込みしてください
+        端末を<br>
+        横向きにして<br>
+        ください
     </div>
 
-    <div id = "startScreen">
-        <div id="startOverlay">
-            <div id = "levelBtns">
-                <button class = "btn startReset" id = "amakuchi">甘口（３色）</button>
-                <button class = "btn startReset" id = "chuukara">中辛（４色）</button>
-                <button class = "btn startReset" id = "karakuchi">辛口（５色）</button>
-            </div>
-            <div>
-                <button class = "btn startReset" id = "startBtn">スタート！</button>
-                <button class = "btn startReset" id = "resetBtn">もういちど挑戦！</button>
-            </div>
+    <div id="startOverlay">
+        <div id = "levelBtns">
+            <button class = "btn selectBtn" id = "amakuchi">甘口（３色）</button>
+            <button class = "btn selectBtn" id = "chuukara">中辛（４色）</button>
+            <button class = "btn selectBtn" id = "karakuchi">辛口（５色）</button>
         </div>
-
-        <div id="layout">
-            <div id="leftControls">
-                <div id="lrBtn">
-                    <button class="btn" id = "btnLeft">←</button>
-                    <button class="btn" id = "btnRight">→</button>
-                </div>
-                <button class="btn wide" id = "btnDown">↓</button>
-            </div>
-
-            <div id="gameStage">
-                <div id="mainStage">
-                    <div id="stage">
-                        <img src="img/batsu.png" id="batsu">
-                    </div>
-                    <div id="score"></div>
-                </div>
-                <div id="next"></div>
-            </div>
-
-            <div id="rightControls">
-                <button class="btn tall" id = "btnCcw">⟲</button>
-                <button class="btn tall" id = "btnCw">⟳</button>
-            </div>
+        <div>
+            <button class = "btn selectBtn" id = "startBtn">スタート！</button>
+            <button class = "btn selectBtn" id = "resetBtn">もういちど挑戦！</button>
         </div>
     </div>
+
+    <div id="leftControls">
+        <div id="lrBtn">
+            <button class="btn" id = "btnLeft">←</button>
+            <button class="btn" id = "btnRight">→</button>
+        </div>
+        <button class="btn wide" id = "btnDown">↓</button>
+    </div>
+
+    <div id="rightControls">
+        <button class="btn tall" id = "btnCcw">⟲</button>
+        <button class="btn tall" id = "btnCw">⟳</button>
+    </div>
+
+    <div id="gameStage">
+        <div id="mainStage">
+            <div id="stage">
+                <img src="img/batsu.png" id="batsu">
+            </div>
+            <div id="score"></div>
+        </div>
+        <div id="next">
+            <div id="next1st"></div>
+            <div id="next2nd"></div>
+        </div>
+    </div>
+
 
     <div style="display:none">
         <!-- <img src="img/batsu.png" id="batsu"> -->
