@@ -1,4 +1,5 @@
 class Stage {
+    static mainStageElement = null;
     static stageElement = null;
     static batsuElement = null;
     static puyoBoard = null;
@@ -7,7 +8,7 @@ class Stage {
     static eraseStartFrame = 0;
     static erasingInfoList = [];
     static zenkeshiImage = null;
-    static nextElement = null;
+    static next1stElement = null;
     static next2ndElement = null;
     static nextPuyoColors = [];
     static nextPuyoElements = [];
@@ -15,14 +16,17 @@ class Stage {
     static next2ndPuyoElements = [];
 
     static initialize() {
+        // 13段目を画面外に隠す
+        Stage.mainStageElement = document.getElementById("mainStage");
+        Stage.mainStageElement.style.top = -Config.puyoImageHeight + 'px'
+
         //
         Stage.stageElement = document.getElementById("stage");
         Stage.stageElement.style.width = Config.puyoImageWidth * Config.stageCols + 'px';
         Stage.stageElement.style.height = Config.puyoImageHeight * Config.stageRows + 'px';
-        // Stage.stageElement.style.height = Config.puyoImageHeight * (Config.stageRows-1) + 'px';
         Stage.stageElement.style.backgroundColor = Config.stageBackgroundColor;
-
-        // // 3列目最上段のバツ印の指定
+    
+        // 3列目最上段のバツ印の指定
         Stage.batsuElement = document.getElementById("batsu");
         Stage.batsuElement.style.width = Config.puyoImageWidth + 'px';
         Stage.batsuElement.style.height = Config.puyoImageHeight + 'px';
@@ -37,20 +41,22 @@ class Stage {
 
         //
         const borderWidth = 2;
-        Stage.nextElement = document.createElement("div");
-        Stage.nextElement.style.position = "absolute";
-        Stage.nextElement.style.left = Config.puyoImageWidth * 0.4 -borderWidth + "px";
-        Stage.nextElement.style.top = (Config.puyoImageHeight * 0.1) - borderWidth + "px";
-        Stage.nextElement.style.width = Config.puyoImageWidth * 1 +"px";
-        Stage.nextElement.style.height = Config.puyoImageWidth * 2 +"px";
-        Stage.nextElement.style.border = borderWidth + "px solid #ff8";
-        Stage.nextElement.style.borderRadius = Config.puyoImageWidth * 0.2 +"px";
-        Stage.nextElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-        nextContainerElement.appendChild(Stage.nextElement);
+        // Stage.nextElement = document.createElement("div");
+        // Stage.nextElement.style.position = "absolute";
+        Stage.next1stElement = document.getElementById("next1st");
+        Stage.next1stElement.style.left = Config.puyoImageWidth * 0.4 -borderWidth + "px";
+        Stage.next1stElement.style.top = (Config.puyoImageHeight * 0.1) - borderWidth + "px";
+        Stage.next1stElement.style.width = Config.puyoImageWidth * 1 +"px";
+        Stage.next1stElement.style.height = Config.puyoImageWidth * 2 +"px";
+        Stage.next1stElement.style.border = borderWidth + "px solid #ff8";
+        Stage.next1stElement.style.borderRadius = Config.puyoImageWidth * 0.2 +"px";
+        Stage.next1stElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        // nextContainerElement.appendChild(Stage.next1stElement);
 
         // 2nd nextぷよ領域
-        Stage.next2ndElement = document.createElement("div");
-        Stage.next2ndElement.style.position = "absolute";
+        // Stage.next2ndElement = document.createElement("div");
+        // Stage.next2ndElement.style.position = "absolute";
+        Stage.next2ndElement = document.getElementById("next2nd");
         Stage.next2ndElement.style.left = Config.puyoImageWidth * 1.4 + "px";
         Stage.next2ndElement.style.top = (Config.puyoImageHeight * 0.5) - borderWidth + "px";
         Stage.next2ndElement.style.width = Config.puyoImageWidth * 0.8 +"px";
@@ -58,7 +64,7 @@ class Stage {
         Stage.next2ndElement.style.border = borderWidth + "px solid #ff8";
         Stage.next2ndElement.style.borderRadius = Config.puyoImageWidth * 0.2 +"px";
         Stage.next2ndElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-        nextContainerElement.appendChild(Stage.next2ndElement);
+        // nextContainerElement.appendChild(Stage.next2ndElement);
 
         //
         Stage.zenkeshiImage = document.getElementById("zenkeshi");
@@ -122,7 +128,7 @@ class Stage {
         const nextCenterPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[0]);
         const nextRotatingPuyoElement = GameImage.getPuyoImage(Stage.nextPuyoColors[1]);
         nextCenterPuyoElement.style.top = Config.puyoImageHeight + "px";
-        Stage.nextElement.append(nextCenterPuyoElement, nextRotatingPuyoElement);
+        Stage.next1stElement.append(nextCenterPuyoElement, nextRotatingPuyoElement);
         Stage.nextPuyoElements = [nextCenterPuyoElement, nextRotatingPuyoElement];
 
         return ret;

@@ -1,14 +1,53 @@
-//
-window.addEventListener("load", () => {
-    //
-    initialize();
-    clearBoard();
+let isGameStart = null;
 
-    //
+// 
+window.addEventListener("load", () => {
+        //
+        initialize();
+        clearBoard();
+
+        // 画面が横長ならゲームスタート
+        if (window.innerWidth > window.innerHeight) {
+            gameStageScaling();
+            startGame();
+        }
+    });
+
+// 画面が縦長の場合、横回転を待ち検出
+window.addEventListener("resize", () => {
+    // 横長になったことを確認
+    if (window.innerWidth > window.innerHeight) {
+        gameStageScaling();
+
+        if (!isGameStart) {
+            startGame();
+        }
+    }
+});
+
+// ステージサイズを画面に合わせて最適化
+function gameStageScaling() {
     const scale = window.innerHeight / 
                     (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight- Config.puyoImageHeight);
-                    // (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
     document.getElementById("gameStage").style.transform = "scale(" + scale + ")";
+}
+
+function levelSetting(numColors) {
+    resetInitialize();
+    Config.puyoColorMax = numColors;
+    Stage.initialize();
+    Stage.stageElement.style.backgroundImage = `url("${GameImage.getPuyoImage(5).src}")`;
+}
+
+
+function startGame() {
+    isGameStart = true;
+    
+    //
+    // const scale = window.innerHeight / 
+    //                 (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight- Config.puyoImageHeight);
+    //                 // (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
+    // document.getElementById("gameStage").style.transform = "scale(" + scale + ")";
     
 
     // 辛さ（レベル）選択ボタン
@@ -23,9 +62,7 @@ window.addEventListener("load", () => {
         levelBtnsElement.style.display = "none";
         startBtnElement.style.display = "block";
 
-        resetInitialize();
-        Config.puyoColorMax = 3;
-        Stage.initialize();
+        levelSetting(3);
     });
 
     amakuchiElement.addEventListener("touchstart", () => {
@@ -35,18 +72,14 @@ window.addEventListener("load", () => {
             startBtnElement.style.display = "block";
         }, 300);
 
-        resetInitialize();
-        Config.puyoColorMax = 3;
-        Stage.initialize();
+        levelSetting(3);
     });
 
     chuukaraElement.addEventListener("click", () => {
         levelBtnsElement.style.display = "none";
         startBtnElement.style.display = "block";
 
-        resetInitialize();
-        Config.puyoColorMax = 4;
-        Stage.initialize();
+        levelSetting(4);
     });
 
     chuukaraElement.addEventListener("touchstart", () => {
@@ -56,18 +89,14 @@ window.addEventListener("load", () => {
             startBtnElement.style.display = "block";
         }, 300);
 
-        resetInitialize();
-        Config.puyoColorMax = 4;
-        Stage.initialize();
+        levelSetting(4);
     });
 
     karakuchiElement.addEventListener("click", () => {
         levelBtnsElement.style.display = "none";
         startBtnElement.style.display = "block";
 
-        resetInitialize();
-        Config.puyoColorMax = 5;
-        Stage.initialize();
+        levelSetting(5);
     });
 
     karakuchiElement.addEventListener("touchstart", () => {
@@ -77,9 +106,7 @@ window.addEventListener("load", () => {
             startBtnElement.style.display = "block";
         }, 300);
 
-        resetInitialize();
-        Config.puyoColorMax = 5;
-        Stage.initialize();
+        levelSetting(5);
     });
 
     // 開始時・リセット時のスタートボタン定義    
@@ -119,7 +146,7 @@ window.addEventListener("load", () => {
 
     //
     // gameLoop();
-});
+};
 
 
 // デバッグ用（画面サイズ表示）
@@ -154,9 +181,10 @@ function initialize() {
     Score.initialize();
 
     // 操作ボタン初期化
-    controls.initialize();
+    Controls.initialize();
 
     //
+    isGameStart = false;
     gameState = "start";
     //
     frame = 0;

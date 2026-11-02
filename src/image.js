@@ -1,6 +1,5 @@
 class GameImage {
     static puyoImageList = null;
-    static puyoNext2ndImageList = null;
     static randomNumbersList = null;
     static digitImageList = null;
     static batankyuImage = null;
@@ -18,17 +17,7 @@ class GameImage {
             GameImage.puyoImageList[i] = image;
         }
 
-        GameImage.puyoNext2ndImageList = [];
-        for (let i = 0; i < Config.puyoColorMax; i++) {
-            const image = document.getElementById("puyo2nd_" + (i+1));
-            image.removeAttribute('id');
-            image.width = Config.puyoImageWidth * 0.8;
-            image.height = Config.puyoImageHeight * 0.8;
-            image.style.position = 'absolute';
-            GameImage.puyoNext2ndImageList[i] = image;
-        }
-
-        //
+         //
         GameImage.digitImageList = [];
         for (let i=0; i<10; i++) {
             const image = document.getElementById("font_" + i);
@@ -48,38 +37,20 @@ class GameImage {
         GameImage.batankyuImage.style.position = "absolute";
     }
 
-
-    // ぷよ色をランダムに並び替えるための関数群
-    static createRandomList() { 
-        const numbers = [0, 1, 2, 3, 4];
-        for (let i = numbers.length - 1; i > 0; i--) {
+    // ゲームに登場するぷよの色をランダムに選択する
+    static randomPuyoColor() {
+        for (let i = GameImage.puyoImageList.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+            [GameImage.puyoImageList[i], GameImage.puyoImageList[j]] = 
+                [GameImage.puyoImageList[j], GameImage.puyoImageList[i]];
         }
-        GameImage.randomNumbersList = numbers;
     }
-
-    static randomSort(imageList, numbersList) {
-        const imageListSort = [];
-
-        for (let i = 0; i < imageList.length; i++) {
-            imageListSort[i] = imageList[numbersList[i]];
-        }
-        return imageListSort;
-    }
-    
 
     //
     static getPuyoImage(color) {
         const image = GameImage.puyoImageList[color - 1].cloneNode(true);
         return image;
     }
-
-    static getPuyoNext2ndImage(color) {
-        const image = GameImage.puyoNext2ndImageList[color - 1].cloneNode(true);
-        return image;
-    }
-
     
     //
     static getDigitImage(digit) {
