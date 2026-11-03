@@ -2,28 +2,30 @@ let isGameStart = null;
 
 // 
 window.addEventListener("load", () => {
-        //
-        initialize();
-        clearBoard();
+    //
+    initialize();
+    clearBoard();
 
-        // 画面が横長ならゲームスタート
-        if (window.innerWidth > window.innerHeight) {
-            gameStageScaling();
-            startGame();
-        }
-    });
+    // 画面が横長ならゲームスタート
+    checkOrientation(isGameStart);
+});
 
 // 画面が縦長の場合、横回転を待ち検出
 window.addEventListener("resize", () => {
-    // 横長になったことを確認
+    // 横長かどうか確認し、ゲームスタート
+    checkOrientation(isGameStart);
+});
+
+// 画面が横長の場合、ゲームスタート
+function checkOrientation(falgGameStart) {
     if (window.innerWidth > window.innerHeight) {
         gameStageScaling();
 
-        if (!isGameStart) {
+        if (!falgGameStart) {
             startGame();
         }
     }
-});
+}
 
 // ステージサイズを画面に合わせて最適化
 function gameStageScaling() {
@@ -32,120 +34,88 @@ function gameStageScaling() {
     document.getElementById("gameStage").style.transform = "scale(" + scale + ")";
 }
 
+// レベル（色数）に応じて設定
 function levelSetting(numColors) {
+    document.getElementById("levelBtns").style.display = "none";
+    
+    setTimeout(() => {
+        document.getElementById("startBtn").style.display = "block";
+    }, 300);
+
     resetInitialize();
     Config.puyoColorMax = numColors;
     Stage.initialize();
-    Stage.stageElement.style.backgroundImage = `url("${GameImage.getPuyoImage(5).src}")`;
+    Stage.stageElement.style.backgroundImage = 
+        `linear-gradient(rgba(0,0,0,0.0),rgba(0,0,0,0.8)), 
+        url("${GameImage.getPuyoImage(5).src}")`;
+}
+
+// 開始時・リセット時のスタートボタン定義
+function defStartBtn() {
+    document.getElementById("startBtn").style.display = "none";
+
+    if (gameState === "start") {
+        gameLoop();
+    } else {
+        gameState = "start";
+    }
+}
+
+// ゲームオーバー時の「もういちど」ボタン定義
+function defResetBtn() {
+    document.getElementById("resetBtn").style.display = "none";
+
+    setTimeout(() => {
+        document.getElementById("levelBtns").style.display = "flex";    
+    }, 300);
 }
 
 
 function startGame() {
     isGameStart = true;
-    
-    //
-    // const scale = window.innerHeight / 
-    //                 (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight- Config.puyoImageHeight);
-    //                 // (Score.scoreElement.offsetTop + Score.scoreElement.offsetHeight);
-    // document.getElementById("gameStage").style.transform = "scale(" + scale + ")";
-    
 
     // 辛さ（レベル）選択ボタン
-    const levelBtnsElement = document.getElementById("levelBtns");
-    const amakuchiElement = document.getElementById("amakuchi");
-    const chuukaraElement = document.getElementById("chuukara");
-    const karakuchiElement = document.getElementById("karakuchi");
-
-    const startBtnElement = document.getElementById("startBtn");
-
-    amakuchiElement.addEventListener("click", () => {
-        levelBtnsElement.style.display = "none";
-        startBtnElement.style.display = "block";
-
+    document.getElementById("amakuchi").addEventListener("click", () => {
         levelSetting(3);
     });
 
-    amakuchiElement.addEventListener("touchstart", () => {
-        levelBtnsElement.style.display = "none";
-
-        setTimeout(() => {
-            startBtnElement.style.display = "block";
-        }, 300);
-
+    document.getElementById("amakuchi").addEventListener("touchstart", () => {
         levelSetting(3);
     });
 
-    chuukaraElement.addEventListener("click", () => {
-        levelBtnsElement.style.display = "none";
-        startBtnElement.style.display = "block";
-
+    document.getElementById("chuukara").addEventListener("click", () => {
         levelSetting(4);
     });
 
-    chuukaraElement.addEventListener("touchstart", () => {
-        levelBtnsElement.style.display = "none";
-
-        setTimeout(() => {
-            startBtnElement.style.display = "block";
-        }, 300);
-
+    document.getElementById("chuukara").addEventListener("touchstart", () => {
         levelSetting(4);
     });
 
-    karakuchiElement.addEventListener("click", () => {
-        levelBtnsElement.style.display = "none";
-        startBtnElement.style.display = "block";
-
+    document.getElementById("karakuchi").addEventListener("click", () => {
         levelSetting(5);
     });
 
-    karakuchiElement.addEventListener("touchstart", () => {
-        levelBtnsElement.style.display = "none";
-
-        setTimeout(() => {
-            startBtnElement.style.display = "block";
-        }, 300);
-
+    document.getElementById("karakuchi").addEventListener("touchstart", () => {
         levelSetting(5);
     });
 
-    // 開始時・リセット時のスタートボタン定義    
-    startBtnElement.addEventListener("click", () => {
-        startBtnElement.style.display = "none";
-        if (gameState === "start") {
-            gameLoop();
-        } else {
-            gameState = "start";
-        }
+    // 開始時・リセット時のスタートボタン定義
+    document.getElementById("startBtn").addEventListener("click", () => {
+        defStartBtn();
     });
 
-    startBtnElement.addEventListener("touchstart", () => {
-        startBtnElement.style.display = "none";
-        if (gameState === "start") {
-            gameLoop();
-        } else {
-            gameState = "start";
-        }
+    document.getElementById("startBtn").addEventListener("touchstart", () => {
+        defStartBtn();
     });
 
     // ゲームオーバー時の「もういちど」ボタン定義
-    const resetBtnElement = document.getElementById("resetBtn");
-
-    resetBtnElement.addEventListener("click", () => {
-        resetBtnElement.style.display = "none";
-        document.getElementById("levelBtns").style.display = "flex";
+    document.getElementById("resetBtn").addEventListener("click", () => {
+        defResetBtn();
     });
 
-    resetBtnElement.addEventListener("touchstart", () => {
-        resetBtnElement.style.display = "none";
-
-        setTimeout(() => {
-            document.getElementById("levelBtns").style.display = "flex";    
-        }, 300);
+    document.getElementById("resetBtn").addEventListener("touchstart", () => {
+        defResetBtn();
     });
-
-    //
-    // gameLoop();
 };
 
 
