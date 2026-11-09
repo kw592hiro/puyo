@@ -34,6 +34,20 @@ body {
     background-color: rgba(238, 238, 238, 0.8);
 }
 
+.threeBtns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    transform: translate(0, -50%);
+    z-index: 80;
+}
+
+.twoBtns {
+    display: flex;
+    flex-direction: row;
+}
+
 /* 要素の表示設定 */
 #rotate-message {
   display: none;
@@ -58,28 +72,6 @@ body {
 
 #resetBtn {
     display: none;
-}
-
-#leftControls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    transform: translate(0, -50%);
-    z-index: 80;
-}
-
-#lrBtn {
-    display: flex;
-    flex-direction: row;
-}
-
-#rightControls {
-    display: flex;
-    flex-direction: row;
-    position: fixed;
-    transform: translate(0, -50%);
-    z-index: 90;
 }
 
 #gameStage {
@@ -138,6 +130,5 @@ body {
   }
 
   #startOverlay {display: none;}
-  #leftControls {display: none;}
-  #rightControls {display: none;}
+  .threeBtns {display: none;}
 }
