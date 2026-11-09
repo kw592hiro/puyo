@@ -253,6 +253,11 @@ function gameLoop() {
                 gameState = "playing";
             }
             break;
+        case "quickTurn":
+            if (Player.quickTurnPuyo(frame)) {
+                gameState = "playing";
+            }
+            break;
         case "gameOver":
             GameImage.prepareBatankyuAnimation(frame);
             gameState = "batankyu";
@@ -271,6 +276,7 @@ function gameLoop() {
             break;
     }
     frame++;
+    // setTimeout(gameLoop, 1000/10);
     setTimeout(gameLoop, 1000/60);
 }
 

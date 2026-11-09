@@ -166,7 +166,6 @@ class Stage {
         const puyoImage = GameImage.getPuyoImage(puyoColor);
         puyoImage.style.left = x * Config.puyoImageWidth + "px";
         puyoImage.style.top = y * Config.puyoImageHeight + "px";
-        // puyoImage.style.top = (y - 1) * Config.puyoImageHeight + "px";
         Stage.stageElement.appendChild(puyoImage);
 
         //

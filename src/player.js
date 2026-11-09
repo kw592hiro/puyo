@@ -12,6 +12,8 @@ class Player {
     static rotateBeforeLeft = 0;
     static rotateAfterLeft = 0;
     static rotateFromRotation = 0;
+    // static playerPuyoCenter = 0;
+    static dummyQtTop = 0;
 
     static initialize() {
         //
@@ -20,7 +22,8 @@ class Player {
             left: false,
             down: false,
             ccw: false,
-            cw: false
+            cw: false,
+            quick: false
         };
         //
         document.addEventListener("keydown", (event) => {
@@ -170,6 +173,15 @@ class Player {
             document.preventDefault;
         });
 
+        document.getElementById("btnQuick").addEventListener("mousedown", () => {
+            Player.keyStatus.quick = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnQuick").addEventListener("mouseup", () => {
+            Player.keyStatus.quick = false;
+            document.preventDefault;
+        });
 
         // タッチでボタン操作対応
         document.getElementById("btnLeft").addEventListener("touchstart", () => {
@@ -219,6 +231,16 @@ class Player {
 
         document.getElementById("btnCw").addEventListener("touchend", () => {
             Player.keyStatus.cw = false;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnQuick").addEventListener("touchstart", () => {
+            Player.keyStatus.quick = true;
+            document.preventDefault;
+        });
+
+        document.getElementById("btnQuick").addEventListener("touchend", () => {
+            Player.keyStatus.quick = false;
             document.preventDefault;
         });
     }
@@ -284,13 +306,13 @@ class Player {
         if (!Stage.getPuyoInfo(x, y+1) && !Stage.getPuyoInfo(x+dx, y+dy+1)) {
             //
             Player.playerPuyoStatus.top += Config.playerFallingSpeed;
+            
             if (isPressingDown) {
                 Player.playerPuyoStatus.top += Config.playerDownSpeed;
             }
             //
             if (Math.floor(Player.playerPuyoStatus.top / Config.puyoImageHeight) != y) {
-            // if (Math.floor(Player.playerPuyoStatus.top / Config.puyoImageHeight) != (y - 1)) {
-                //
+                 //
                 y += 1;
                 Player.playerPuyoStatus.y = y;
                 //
@@ -305,7 +327,6 @@ class Player {
                 } else {
                     //
                     Player.playerPuyoStatus.top = y * Config.puyoImageHeight;
-                    // Player.playerPuyoStatus.top = (y - 1) * Config.puyoImageHeight;
                     Player.groundedFrame = 1;
                     return false;
                 }
@@ -332,6 +353,64 @@ class Player {
             }
         }
     }
+
+    // クイックターン用の自由落下
+    static dropPlayerPuyoQT(isPressingDown) {
+        let {x, y, dx, dy} = Player.playerPuyoStatus;
+
+        //
+        if (!Stage.getPuyoInfo(x, y+1) && !Stage.getPuyoInfo(x+dx, y+dy+1)) {
+            //
+            Player.dummyQtTop += Config.playerFallingSpeed;
+            
+            if (isPressingDown) {
+                Player.dummyQtTop += Config.playerDownSpeed;
+            }
+            //
+            if (Math.floor(Player.dummyQtTop / Config.puyoImageHeight) != y) {
+                 //
+                y += 1;
+                Player.playerPuyoStatus.y = y;
+                //
+                if (Player.keyStatus.down) {
+                    Score.addScore(1);
+                }
+                //
+                if (!Stage.getPuyoInfo(x, y+1) && !Stage.getPuyoInfo(x+dx, y+dy+1)) {
+                    //
+                    Player.groundedFrame = 0;
+                    return false;
+                } else {
+                    //
+                    Player.dummyQtTop = y * Config.puyoImageHeight;
+                    Player.groundedFrame = 1;
+                    return false;
+                }
+            } else {
+                //
+                Player.groundedFrame = 0;
+                return false;
+            }
+        } else {
+            //
+            if (Player.groundedFrame === 0) {
+                //
+                Player.groundedFrame = 1;
+                return false;
+            } else {
+                //
+                Player.groundedFrame++;
+                if (Player.groundedFrame > Config.playerLockDelayFrames) {
+                    //
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+
+
 
     //
     static update(frame) {
@@ -387,6 +466,7 @@ class Player {
                 Player.playerPuyoStatus.x += mx;
                 return "moving";
             }
+
         } else if (Player.keyStatus.ccw || Player.keyStatus.cw) {
             //
             //
@@ -485,14 +565,14 @@ class Player {
                     if (Player.groundedFrame > 0) {
                         //
                         Player.playerPuyoStatus.y -= 1;
-                        Player.groundedFrame = 0;
+                        // Player.groundedFrame = 0;
                     }
                     Player.playerPuyoStatus.top = Player.playerPuyoStatus.y * Config.puyoImageHeight;
                 }
                 //
                 Player.actionStartFrame = frame;
-                Player.rotateBeforeLeft = x*Config.puyoImageHeight;
-                Player.rotateAfterLeft = (x + cx)*Config.puyoImageHeight;
+                Player.rotateBeforeLeft = x*Config.puyoImageWidth;
+                Player.rotateAfterLeft = (x + cx)*Config.puyoImageWidth;
                 Player.rotateFromRotation = Player.playerPuyoStatus.rotation;
                 //
                 Player.playerPuyoStatus.x += cx;
@@ -512,9 +592,58 @@ class Player {
                     return "rotatingCw";
                 }
             }
+        } else if (Player.keyStatus.quick) {
+            const {x, y, dy} = Player.playerPuyoStatus;
+            let canQuick = false;
+
+            // クイックターン可能か確認
+            if ((Stage.getPuyoInfo(x-1, y) && Stage.getPuyoInfo(x+1, y)) || (Stage.getPuyoInfo(x-1, y+dy) && Stage.getPuyoInfo(x+1, y+dy))) {
+                canQuick = true;
+            }
+            
+            // 可能な場合、クイックターン処理
+            if (canQuick) {
+                Player.actionStartFrame = frame;
+                Player.rotateBeforeLeft = x*Config.puyoImageWidth;
+                Player.dummyQtTop = Player.playerPuyoStatus.top;
+                Player.rotateFromRotation = Player.playerPuyoStatus.rotation;
+                
+                return "quickTurn";
+            }
         }
 
         return "playing";
+    }
+
+    // クイックターンのアニメーション
+    static quickTurnPuyo(frame) {
+        // クイックターン中も自由落下させる
+        Player.dropPlayerPuyoQT(false);
+
+        let ratio = (frame - Player.actionStartFrame) / Config.quickTurnFrames;
+        if (ratio > 1) {
+            //
+            ratio = 1;
+        }
+
+        // 軸ぷよの座標回転
+        const playerPuyoCenter = Player.dummyQtTop + Player.playerPuyoStatus.dy * Config.puyoImageHeight / 2;
+        Player.playerPuyoStatus.top = playerPuyoCenter - Config.puyoImageHeight /2 * Math.sin((Player.rotateFromRotation + 180 + ratio * 180) * Math.PI / 180);
+        Player.playerPuyoStatus.left = Player.rotateBeforeLeft + Config.puyoImageHeight /2 * Math.cos((Player.rotateFromRotation + 180 + ratio * 180) * Math.PI / 180);
+
+        // 子ぷよの座標回転
+        Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + ratio * 180) % 360;
+
+        Player.setPlayerPuyoPosition();
+
+        if (ratio === 1) {
+            // クイックターン完了したので、軸ぷよと子ぷよの座標を入れ替える
+            Player.playerPuyoStatus.y += Player.playerPuyoStatus.dy;
+            Player.playerPuyoStatus.dy *= -1;
+
+            return true;
+        }
+        return false;
     }
 
     //
@@ -523,7 +652,7 @@ class Player {
         Player.dropPlayerPuyo(false);
 
         //
-        let ratio = (frame - Player.actionStartFrame)/ Config.playerMoveFrames;
+        let ratio = (frame - Player.actionStartFrame) / Config.playerMoveFrames;
         if (ratio > 1) {
             //
             ratio = 1;
@@ -552,12 +681,7 @@ class Player {
         }
         Player.playerPuyoStatus.left = (Player.rotateAfterLeft - Player.rotateBeforeLeft) * ratio + Player.rotateBeforeLeft;
         
-        if (rotateDirection === 1) {
-            Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + ratio * 90) % 360;
-        } else {
-            Player.playerPuyoStatus.rotation = (Player.rotateFromRotation - ratio * 90 +360 ) % 360;
-        }
-        // Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + ratio * 90) % 360;
+        Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + rotateDirection * ratio * 90 +360) % 360;
         
         //
         Player.setPlayerPuyoPosition();
