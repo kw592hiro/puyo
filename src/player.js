@@ -332,6 +332,8 @@ class Player {
                 }
             } else {
                 //
+
+                // ここで回し時の接地時間がリセットされている
                 Player.groundedFrame = 0;
                 return false;
             }
@@ -565,7 +567,7 @@ class Player {
                     if (Player.groundedFrame > 0) {
                         //
                         Player.playerPuyoStatus.y -= 1;
-                        // Player.groundedFrame = 0;
+                        Player.groundedFrame = 0;
                     }
                     Player.playerPuyoStatus.top = Player.playerPuyoStatus.y * Config.puyoImageHeight;
                 }
