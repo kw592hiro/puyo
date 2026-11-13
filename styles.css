@@ -19,6 +19,7 @@ body {
     touch-action: none;
     border: none;
     font-weight: bold;
+    color: black;
     background-color: #eee;
 }
 
