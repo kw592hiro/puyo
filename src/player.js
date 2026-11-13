@@ -12,8 +12,8 @@ class Player {
     static rotateBeforeLeft = 0;
     static rotateAfterLeft = 0;
     static rotateFromRotation = 0;
-    // static playerPuyoCenter = 0;
     static dummyQtTop = 0;
+    static groundedFlag = false;
 
     static initialize() {
         //
@@ -280,6 +280,7 @@ class Player {
         };
         //
         Player.groundedFrame = 0;
+        Player.groundedFlag = false;
         //
         Player.setPlayerPuyoPosition();
         return true;
@@ -322,30 +323,38 @@ class Player {
                 //
                 if (!Stage.getPuyoInfo(x, y+1) && !Stage.getPuyoInfo(x+dx, y+dy+1)) {
                     //
-                    Player.groundedFrame = 0;
+                    // Player.groundedFrame = 0;
+                    Player.groundedFlag = false;
                     return false;
                 } else {
                     //
                     Player.playerPuyoStatus.top = y * Config.puyoImageHeight;
-                    Player.groundedFrame = 1;
+                    // Player.groundedFrame = 1;
+                    Player.groundedFlag = true;
                     return false;
                 }
             } else {
                 //
 
                 // ここで回し時の接地時間がリセットされている
-                Player.groundedFrame = 0;
+                // Player.groundedFrame = 0;
+                Player.groundedFlag = false;
                 return false;
             }
         } else {
             //
-            if (Player.groundedFrame === 0) {
+            // if (Player.groundedFrame === 0) {
+            if (!Player.groundedFlag) {
                 //
-                Player.groundedFrame = 1;
+                // Player.groundedFrame = 1;
+                Player.groundedFlag = true;
                 return false;
             } else {
                 //
                 Player.groundedFrame++;
+                if (isPressingDown) {
+                    Player.groundedFrame ++;
+                }
                 if (Player.groundedFrame > Config.playerLockDelayFrames) {
                     //
                     return true;
@@ -380,28 +389,36 @@ class Player {
                 //
                 if (!Stage.getPuyoInfo(x, y+1) && !Stage.getPuyoInfo(x+dx, y+dy+1)) {
                     //
-                    Player.groundedFrame = 0;
+                    // Player.groundedFrame = 0;
+                    Player.groundedFlag = false;
                     return false;
                 } else {
                     //
                     Player.dummyQtTop = y * Config.puyoImageHeight;
-                    Player.groundedFrame = 1;
+                    // Player.groundedFrame = 1;
+                    Player.groundedFlag = true;
                     return false;
                 }
             } else {
                 //
-                Player.groundedFrame = 0;
+                // Player.groundedFrame = 0;
+                Player.groundedFlag = false;
                 return false;
             }
         } else {
             //
-            if (Player.groundedFrame === 0) {
+            // if (Player.groundedFrame === 0) {
+            if (!Player.groundedFlag) {
                 //
-                Player.groundedFrame = 1;
+                // Player.groundedFrame = 1;
+                Player.groundedFlag = true;
                 return false;
             } else {
                 //
                 Player.groundedFrame++;
+                if (isPressingDown) {
+                    Player.groundedFrame ++;
+                }
                 if (Player.groundedFrame > Config.playerLockDelayFrames) {
                     //
                     return true;
@@ -447,7 +464,8 @@ class Player {
                 canMove = false;
             }
             //
-            if (Player.groundedFrame === 0) {
+            // if (Player.groundedFrame === 0) {
+            if (!Player.groundedFlag) {
                 //
                 if (Stage.getPuyoInfo(cx + mx, cy + 1)) {
                     //
@@ -474,7 +492,8 @@ class Player {
             //
             const x = Player.playerPuyoStatus.x;
             //
-            const y = Player.playerPuyoStatus.y + (Player.groundedFrame === 0 ? 1 : 0);
+            // const y = Player.playerPuyoStatus.y + (Player.groundedFrame === 0 ? 1 : 0);
+            const y = Player.playerPuyoStatus.y + (!Player.groundedFlag ? 1 : 0);
             const rotation = Player.playerPuyoStatus.rotation;
             let canRotate = true;
 
@@ -564,10 +583,12 @@ class Player {
             if (canRotate) {
                 //
                 if (cy === -1) {
-                    if (Player.groundedFrame > 0) {
+                    // if (Player.groundedFrame > 0) {
+                    if (Player.groundedFlag) {
                         //
                         Player.playerPuyoStatus.y -= 1;
-                        Player.groundedFrame = 0;
+                        // Player.groundedFrame = 0;
+                        Player.groundedFlag = false;
                     }
                     Player.playerPuyoStatus.top = Player.playerPuyoStatus.y * Config.puyoImageHeight;
                 }
