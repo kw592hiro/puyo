@@ -37,7 +37,7 @@ class Config {
     static zenkeshiDuration = 150;      // 全消しアニメーション時間[msec]
 
     static playerFallingSpeed = 0.9;    // プレイ中の自由落下スピード
-    static playerLockDelayFrames = 20;  // 何フレーム接地したらぷよを固定するか
+    static playerLockDelayFrames = 25;  // 何フレーム接地したらぷよを固定するか
     static playerDownSpeed = 10;        // 高速落下スピード
     static playerMoveFrames = 10;       // 左右移動のフレーム数
     static playerRotateFrames = 10;     // 回転のフレーム数

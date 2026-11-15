@@ -166,6 +166,9 @@ function initialize() {
 }
 
 function gameLoop() {
+    let finishMove = null;
+    let finishRotate = null;
+
     switch (gameState) {
         case "start":
             //
@@ -235,6 +238,7 @@ function gameLoop() {
             gameState = "checkFallingPuyo";
             break;
         case "moving":
+            Player.dropPlayerPuyo(Player.keyStatus.down);
             //
             if (Player.movePlayerPuyo(frame)) {
                 //
@@ -242,14 +246,38 @@ function gameLoop() {
             }
             break;
         case "rotatingCcw":
+            Player.dropPlayerPuyo(Player.keyStatus.down);
             if (Player.rotatePlayerPuyo(frame, 1)) {
                 //
                 gameState = "playing";
             }
             break;
         case "rotatingCw":
+            Player.dropPlayerPuyo(Player.keyStatus.down);
             if (Player.rotatePlayerPuyo(frame, -1)) {
                 //
+                gameState = "playing";
+            }
+            break;
+        case "movingAndCcw":
+            // Player.dropPlayerPuyo(Player.keyStatus.down);
+
+            finishMove = Player.movePlayerPuyo(frame);
+            finishRotate = Player.rotatePlayerPuyo(frame, 1);
+            Player.dropPlayerPuyo(Player.keyStatus.down);
+
+            if (finishMove && finishRotate) {
+                gameState = "playing";
+            }
+            break;
+        case "movingAndCw":
+            // Player.dropPlayerPuyo(Player.keyStatus.down);
+
+            finishMove = Player.movePlayerPuyo(frame);
+            finishRotate = Player.rotatePlayerPuyo(frame, -1);
+            Player.dropPlayerPuyo(Player.keyStatus.down);
+
+            if (finishMove && finishRotate) {
                 gameState = "playing";
             }
             break;
