@@ -218,7 +218,7 @@ function gameLoop() {
             break;
         case "createPlayerPuyo":
             //
-            if (!Player.createPlayerPuyo()) {
+            if (!Player.createPlayerPuyo(frame)) {
                 //
                 gameState = "gameOver";
             } else {

@@ -4,6 +4,7 @@ class Player {
     static playerPuyoStatus = null;
     static centerPuyoElement = null;
     static rotatingPuyoElement = null;
+    static centerEdgeElement = null;
     static groundedFrame = 0;
     static keyStatus = null;
     static moveStartFrame = 0;
@@ -341,7 +342,7 @@ class Player {
     }
 
     //
-    static createPlayerPuyo() {
+    static createPlayerPuyo(frame) {
         //
         // if (Stage.getPuyoInfo(2, 0)) {
         if (Stage.getPuyoInfo(2, 1)) {
@@ -356,7 +357,9 @@ class Player {
 
         //
         Player.centerPuyoElement = GameImage.getPuyoImage(Player.centerPuyoColor);
+        Player.centerEdgeElement = GameImage.getEdgeImage(Player.centerPuyoColor);
         Player.rotatingPuyoElement = GameImage.getPuyoImage(Player.rotatingPuyoColor);
+        Stage.stageElement.appendChild(Player.centerEdgeElement);
         Stage.stageElement.appendChild(Player.centerPuyoElement);
         Stage.stageElement.appendChild(Player.rotatingPuyoElement);
 
@@ -375,16 +378,23 @@ class Player {
         //
         Player.groundedFrame = 0;
         Player.groundedFlag = false;
+
         //
-        Player.setPlayerPuyoPosition();
+        Player.setPlayerPuyoPosition(frame);
         return true;
     }
 
     //
-    static setPlayerPuyoPosition() {
+    static setPlayerPuyoPosition(frame) {
         //
         Player.centerPuyoElement.style.left = Player.playerPuyoStatus.left + "px";
         Player.centerPuyoElement.style.top = Player.playerPuyoStatus.top + "px";
+
+        Player.centerEdgeElement.style.left = Player.playerPuyoStatus.left + "px";
+        Player.centerEdgeElement.style.top = Player.playerPuyoStatus.top + "px";
+
+        // 軸ぷよの輪郭線を点滅させる
+        Player.centerEdgeElement.style.opacity = (1 + Math.sin(2 * Math.PI * frame / Config.edgePeriod)) / 2;
 
         //
         const x = Player.playerPuyoStatus.left + Math.cos(Player.playerPuyoStatus.rotation * Math.PI / 180) * Config.puyoImageWidth;
@@ -548,7 +558,7 @@ class Player {
             return "fix";
         }
         //
-        Player.setPlayerPuyoPosition();
+        Player.setPlayerPuyoPosition(frame);
 
         let canMove = false;
         let canRotate = false;
@@ -807,7 +817,7 @@ class Player {
         }
         
         //
-        Player.setPlayerPuyoPosition();
+        Player.setPlayerPuyoPosition(frame);
 
         if (ratio === 1) {
             //
@@ -836,7 +846,7 @@ class Player {
         }
 
         //
-        Player.setPlayerPuyoPosition();
+        Player.setPlayerPuyoPosition(frame);
 
         if (ratio === 1) {
             //
@@ -878,7 +888,7 @@ class Player {
             Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + ratio * 180) % 360;
         }
 
-        Player.setPlayerPuyoPosition();
+        Player.setPlayerPuyoPosition(frame);
 
         if (ratio === 1) {
             return true;
@@ -900,6 +910,8 @@ class Player {
         //
         Player.centerPuyoElement.remove();
         Player.centerPuyoElement = null;
+        Player.centerEdgeElement.remove();
+        Player.centerEdgeElement = null;
         Player.rotatingPuyoElement.remove();
         Player.rotatingPuyoElement = null;
     }
