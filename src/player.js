@@ -4,7 +4,10 @@ class Player {
     static playerPuyoStatus = null;
     static centerPuyoElement = null;
     static rotatingPuyoElement = null;
+    static centerPositionElement = null;
+    static rotatingPositionElement = null;
     static centerEdgeElement = null;
+    static topPuyoRows = null;
     static groundedFrame = 0;
     static keyStatus = null;
     static moveStartFrame = 0;
@@ -28,6 +31,10 @@ class Player {
             cw: false,
             quick: false
         };
+
+        // 積んであるぷよの最上段の配列
+        Player.topPuyoRows = [];
+
         //
         document.addEventListener("keydown", (event) => {
             //
@@ -355,6 +362,11 @@ class Player {
         Player.centerPuyoColor = nextPuyoColors[0];
         Player.rotatingPuyoColor = nextPuyoColors[1];
 
+        // 自ぷよの落下位置表示の画像を追加（自ぷよより背面なので、先に処理）
+        Player.centerPositionElement = GameImage.getPositionImage(Player.centerPuyoColor);
+        Player.rotatingPositionElement = GameImage.getPositionImage(Player.rotatingPuyoColor);
+        Stage.stageElement.appendChild(Player.centerPositionElement);
+        Stage.stageElement.appendChild(Player.rotatingPositionElement);
         //
         Player.centerPuyoElement = GameImage.getPuyoImage(Player.centerPuyoColor);
         Player.centerEdgeElement = GameImage.getEdgeImage(Player.centerPuyoColor);
@@ -379,9 +391,33 @@ class Player {
         Player.groundedFrame = 0;
         Player.groundedFlag = false;
 
+        // 積んであるぷよの最上段を検索
+        Player.searchTopPuyo();
+
         //
         Player.setPlayerPuyoPosition(frame);
         return true;
+    }
+
+    // 自ぷよ落下位置を示すため、各列最上段のぷよ位置を記憶
+    static searchTopPuyo() {
+        
+        for (let col = 0; col < Config.stageCols; col++) {
+            let row = Config.stageRows - 1;
+            let flag = false;
+
+            while (!flag) {
+
+                console.log(Stage.getPuyoInfo(col, row));
+
+                if (Stage.getPuyoInfo(col, row) != null) {
+                    row--;
+                } else {
+                    Player.topPuyoRows[col] = row;
+                    flag = true;
+                }
+            }
+        }
     }
 
     //
@@ -401,6 +437,25 @@ class Player {
         const y = Player.playerPuyoStatus.top - Math.sin(Player.playerPuyoStatus.rotation * Math.PI / 180) * Config.puyoImageHeight;
         Player.rotatingPuyoElement.style.left = x + "px";
         Player.rotatingPuyoElement.style.top = y + "px";
+
+        // 自ぷよの落下位置を表示
+        const cx = Player.playerPuyoStatus.x;
+        const rx = cx + Player.playerPuyoStatus.dx;
+        let cy = Player.topPuyoRows[cx];
+        let ry = Player.topPuyoRows[rx];
+                
+        if (Player.playerPuyoStatus.dy === 1) {
+            // 子ぷよが下の場合、軸ぷよの落下表示の高さを１段上げる
+            cy--;
+        } else if (Player.playerPuyoStatus.dy === -1) {
+            // 子ぷよが上の場合、子ぷよの落下表示の高さを1段上げる
+            ry--;
+        }
+
+        Player.centerPositionElement.style.left = cx * Config.puyoImageWidth + "px";
+        Player.centerPositionElement.style.top = cy * Config.puyoImageHeight + "px";
+        Player.rotatingPositionElement.style.left = rx * Config.puyoImageWidth + "px";
+        Player.rotatingPositionElement.style.top = ry * Config.puyoImageHeight + "px";
     }
 
     //
@@ -907,6 +962,13 @@ class Player {
             //
             Stage.createPuyo(x+dx, y+dy, Player.rotatingPuyoColor);
         }
+
+        // 自ぷよ落下位置予告を消去
+        Player.centerPositionElement.remove();
+        Player.centerPositionElement = null;
+        Player.rotatingPositionElement.remove();
+        Player.rotatingPositionElement = null;
+
         //
         Player.centerPuyoElement.remove();
         Player.centerPuyoElement = null;

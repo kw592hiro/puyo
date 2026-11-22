@@ -1,6 +1,7 @@
 class GameImage {
     static puyoImageList = null;
     static edgeImageList = null;
+    static positionImageList = null;
     static randomNumbersList = null;
     static digitImageList = null;
     static batankyuImage = null;
@@ -30,6 +31,17 @@ class GameImage {
             image.height = Config.puyoImageHeight;
             image.style.position = 'absolute';
             GameImage.edgeImageList[i] = image;
+        }
+
+        // 自ぷよの落下位置を示す画像
+        GameImage.positionImageList = [];
+        for (let i = 0;  i < Config.puyoColorMax; i++) {
+            const image = document.getElementById("position_" + (i+1));
+            image.removeAttribute('id');
+            image.width = Config.puyoImageWidth;
+            image.height = Config.puyoImageHeight;
+            image.style.position = 'absolute';
+            GameImage.positionImageList[i] = image;
         }
 
          //
@@ -74,6 +86,12 @@ class GameImage {
     static getEdgeImage(color) {
         // const image = GameImage.edgeImageList[color - 1].cloneNode(true);
         const image = GameImage.edgeImageList[GameImage.randomNumbersList[color - 1]].cloneNode(true);
+        return image;
+    }
+    
+    static getPositionImage(color) {
+        // const image = GameImage.edgeImageList[color - 1].cloneNode(true);
+        const image = GameImage.positionImageList[GameImage.randomNumbersList[color - 1]].cloneNode(true);
         return image;
     }
     

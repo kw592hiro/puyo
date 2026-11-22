@@ -42,7 +42,7 @@ class Config {
     static playerMoveFrames = 10;       // 左右移動のフレーム数
     static playerRotateFrames = 10;     // 回転のフレーム数
     static quickTurnFrames = 10;        // クイックターンのフレーム数
-    static edgePeriod = 90;             // 軸ぷよの輪郭の点滅周期フレーム数              
+    static edgePeriod = 30;             // 軸ぷよの輪郭の点滅周期フレーム数              
 
     static scoreHeight = 33;
     static comboBonusTable = [0, 0, 8, 16, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 512, 544, 576, 608, 640, 672];
