@@ -407,9 +407,6 @@ class Player {
             let flag = false;
 
             while (!flag) {
-
-                console.log(Stage.getPuyoInfo(col, row));
-
                 if (Stage.getPuyoInfo(col, row) != null) {
                     row--;
                 } else {

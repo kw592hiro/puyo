@@ -2,6 +2,7 @@ class GameImage {
     static puyoImageList = null;
     static edgeImageList = null;
     static positionImageList = null;
+    static ojamaImageList = null;
     static randomNumbersList = null;
     static digitImageList = null;
     static batankyuImage = null;
@@ -44,7 +45,7 @@ class GameImage {
             GameImage.positionImageList[i] = image;
         }
 
-         //
+         // スコアの数字の画像
         GameImage.digitImageList = [];
         for (let i=0; i<10; i++) {
             const image = document.getElementById("font_" + i);
@@ -56,6 +57,25 @@ class GameImage {
             image.height = Config.scoreHeight;
 
             GameImage.digitImageList[i] = image;
+        }
+
+        // おじゃまぷよ予告の画像
+        GameImage.ojamaImageList = [];
+        for (let i = 0; i < Config.yokokuTable.length; i++) {
+            const image = document.getElementById("ojama_" + (i+1));
+            image.removeAttribute('id');
+
+            image.height = Config.puyoImageHeight;
+            if (i != Config.yokokuTable.length - 1) {
+                image.width = Config.puyoImageWidth;
+                // image.height = Config.puyoImageHeight;
+            } else {
+                // 小ぷよの幅だけは小さめ
+                image.width = Config.puyoImageWidth * 0.6;
+                // image.height = Config.puyoImageHeight;
+            }
+            image.style.position = 'absolute';
+            GameImage.ojamaImageList[i] = image;
         }
 
         //
@@ -95,6 +115,10 @@ class GameImage {
         return image;
     }
     
+    static getOjamaImage(yokoku) {
+        const image = GameImage.ojamaImageList[yokoku].cloneNode(true);
+        return image;
+    }
     //
     static getDigitImage(digit) {
         const image = GameImage.digitImageList[digit].cloneNode(true);

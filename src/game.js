@@ -135,6 +135,7 @@ function startGame() {
 let gameState;
 let frame;
 let comboCount = 0;
+let ojamaComboTotal = 0
 let frameBatankyu;
 
 function initialize() {
@@ -197,8 +198,16 @@ function gameLoop() {
                 comboCount++;
                 //
                 Score.addComboScore(comboCount, eraseInfo.piece, eraseInfo.color);
+                
+                // おじゃまぷよ数計算（連鎖中）
+                const ojamaCount = Score.calculateOjama();
+                ojamaComboTotal += ojamaCount;
+                // 予告ぷよ表示
+                Stage.createYokoku(ojamaComboTotal);
+
                 Stage.hideZenkeshi();
             } else {
+                // 連鎖終了時 or 連鎖が発生しないときの処理
                 if (Stage.puyoCount ===0 && comboCount > 0) {
                     //
                     Stage.showZenkeshi();
@@ -206,8 +215,10 @@ function gameLoop() {
                     Score.addScore(Config.zenkeshiBonus);
                 }
                 comboCount = 0;
+                ojamaComboTotal = 0;
                 gameState ="createPlayerPuyo";
             }
+
             break;
         case "erasingPuyo":
             //
@@ -335,4 +346,9 @@ function clearBoard() {
         element.remove();
     };
     document.getElementById("next").replaceChildren;
+
+    // 予告ぷよ領域の削除
+    for (const element of Stage.yokokuElements) {
+        element.remove();
+    };
 }

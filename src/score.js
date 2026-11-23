@@ -2,6 +2,7 @@ class Score {
     static scoreElement;
     static digitCount = 0;
     static score = 0;
+    static ojamaTotal = 0;  // おじゃまぷよの累積数
 
     static initialize() {
         //
@@ -13,6 +14,7 @@ class Score {
         //
         Score.digitCount = Math.trunc(Config.stageCols * Config.puyoImageWidth / GameImage.getDigitImageWidth());
         Score.score = 0;
+        Score.ojamaTotal = 0;
 
         //
         Score.updateScore();
@@ -57,5 +59,13 @@ class Score {
     static addScore(score) {
         Score.score += score;
         Score.updateScore();
+    }
+
+    // おじゃまぷよ算
+    static calculateOjama() {
+        const ojama = Math.trunc(Score.score / Config.ojamaScore - Score.ojamaTotal);
+        Score.ojamaTotal += ojama;
+
+        return ojama;
     }
 }

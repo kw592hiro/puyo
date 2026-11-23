@@ -1,7 +1,6 @@
 class Stage {
     static mainStageElement = null;
     static stageElement = null;
-    static batsuElement = null;
     static puyoBoard = null;
     static puyoCount = 0;
     static fallingPuyoInfoList = [];
@@ -10,6 +9,7 @@ class Stage {
     static zenkeshiImage = null;
     static next1stElement = null;
     static next2ndElement = null;
+    static yokokuElements = null;
     static nextPuyoColors = [];
     static nextPuyoElements = [];
     static next2ndPuyoColors = [];
@@ -27,11 +27,11 @@ class Stage {
         Stage.stageElement.style.backgroundColor = Config.stageBackgroundColor;
     
         // 3列目最上段のバツ印の指定
-        Stage.batsuElement = document.getElementById("batsu");
-        Stage.batsuElement.style.width = Config.puyoImageWidth + 'px';
-        Stage.batsuElement.style.height = Config.puyoImageHeight + 'px';
-        Stage.batsuElement.style.left = Config.puyoImageWidth * 2 + 'px';
-        Stage.batsuElement.style.top = Config.puyoImageHeight + 'px';
+        const batsuElement = document.getElementById("batsu");
+        batsuElement.style.width = Config.puyoImageWidth + 'px';
+        batsuElement.style.height = Config.puyoImageHeight + 'px';
+        batsuElement.style.left = Config.puyoImageWidth * 2 + 'px';
+        batsuElement.style.top = Config.puyoImageHeight + 'px';
  
         //
         const nextContainerElement = document.getElementById("next");
@@ -52,7 +52,7 @@ class Stage {
         Stage.next1stElement.style.borderRadius = Config.puyoImageWidth * 0.2 +"px";
         Stage.next1stElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
         // nextContainerElement.appendChild(Stage.next1stElement);
-
+        
         // 2nd nextぷよ領域
         // Stage.next2ndElement = document.createElement("div");
         // Stage.next2ndElement.style.position = "absolute";
@@ -65,6 +65,12 @@ class Stage {
         Stage.next2ndElement.style.borderRadius = Config.puyoImageWidth * 0.2 +"px";
         Stage.next2ndElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
         // nextContainerElement.appendChild(Stage.next2ndElement);
+
+        // 予告ぷよ表示領域
+        Stage.yokokuContainerElement = document.getElementById("yokoku");
+        Stage.yokokuContainerElement.style.width = Config.puyoImageWidth * (Config.stageCols + 0.6) + "px";
+        Stage.yokokuContainerElement.style.height = Config.puyoImageHeight * 1.2 + "px";
+        Stage.yokokuContainerElement.style.backgroundColor = Config.ojamaBackgroundColor;
 
         //
         Stage.zenkeshiImage = document.getElementById("zenkeshi");
@@ -101,6 +107,7 @@ class Stage {
         Stage.nextPuyoElements = [];
         Stage.next2ndPuyoColors = [];
         Stage.next2ndPuyoElements = [];
+        Stage.yokokuElements = [];
         Stage.getNext2ndPuyoColors();
         Stage.getNextPuyoColors();
     }
@@ -404,5 +411,41 @@ class Stage {
     static hideZenkeshi() {
         Stage.zenkeshiImage.style.transition = "opacity " + Config.zenkeshiDuration + "ms linear";
         Stage.zenkeshiImage.style.opacity = "0";
+    }
+
+    // 予告ぷよを表示
+    static createYokoku(ojamaCount) {
+        // 表示中の予告ぷよを消す
+        for (const element of Stage.yokokuElements) {
+            element.remove();
+        }
+        Stage.yokokuElements =[];
+
+        // 表示する予告ぷよを特定
+        let ojamaRemain = ojamaCount;   // まだ予告ぷよにカウントされていないおじゃまぷよ数
+        let yokokuLeft = Config.puyoImageWidth * 0.3;   // 予告ぷよの表示位置
+
+        for (let yokoku = 0; yokoku < Config.yokokuTable.length; yokoku++) {
+            // 予告ぷよの表示数を計算
+            const yokokuCount = Math.trunc(ojamaRemain / Config.yokokuTable[yokoku]);
+
+            // 予告ぷよの画像リスト作成
+            for (let i = 0; i < yokokuCount; i++) {
+                const yokokuImage = GameImage.getOjamaImage(yokoku);
+                yokokuImage.style.top = Config.puyoImageHeight * 0.1 + 'px';
+                yokokuImage.style.left = yokokuLeft + 'px';
+                Stage.yokokuElements.push(yokokuImage);
+
+                yokokuLeft += yokokuImage.width;
+            }
+
+            // 予告ぷよ表示
+            for (const element of Stage.yokokuElements) {
+                Stage.yokokuContainerElement.appendChild(element);
+            }
+
+            // 残りのおじゃまぷよ数計算
+            ojamaRemain %= Config.yokokuTable[yokoku];
+        }
     }
 }

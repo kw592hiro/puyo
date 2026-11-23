@@ -12,6 +12,7 @@ class Config {
     static stageBackgroundColor = '#11213b';
     static nextBackgroundColor = '#e2a9c8';
     static scoreBackgroundColor = '#24c0bb';
+    static ojamaBackgroundColor = '#7e97cc'
 
     
     // static initialBoard = [
@@ -42,13 +43,16 @@ class Config {
     static playerMoveFrames = 10;       // 左右移動のフレーム数
     static playerRotateFrames = 10;     // 回転のフレーム数
     static quickTurnFrames = 10;        // クイックターンのフレーム数
-    static edgePeriod = 30;             // 軸ぷよの輪郭の点滅周期フレーム数              
+    static edgePeriod = 30;             // 軸ぷよの輪郭の点滅周期フレーム数
 
     static scoreHeight = 33;
     static comboBonusTable = [0, 0, 8, 16, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 512, 544, 576, 608, 640, 672];
     static pieceBonusTable = [0, 0, 0, 0, 0, 2, 3, 4, 5, 6, 7, 10];
     static colorBonusTable = [0, 0, 3, 6, 12, 24];
     static zenkeshiBonus = 2100;
+
+    static ojamaScore = 70;     // おじゃまぷよ１個発生のスコア
+    static yokokuTable = [720, 360, 180, 30, 6, 1]; // 予告ぷよ数
 
     static batankyuAnimationFrames = 1000;
 }
