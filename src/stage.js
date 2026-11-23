@@ -70,7 +70,7 @@ class Stage {
         Stage.yokokuContainerElement = document.getElementById("yokoku");
         Stage.yokokuContainerElement.style.width = Config.puyoImageWidth * (Config.stageCols + 0.6) + "px";
         Stage.yokokuContainerElement.style.height = Config.puyoImageHeight * 1.2 + "px";
-        Stage.yokokuContainerElement.style.backgroundColor = Config.ojamaBackgroundColor;
+        Stage.yokokuContainerElement.style.backgroundColor = Config.yokokuBackgroundColor;
 
         //
         Stage.zenkeshiImage = document.getElementById("zenkeshi");
@@ -431,7 +431,7 @@ class Stage {
 
             // 予告ぷよの画像リスト作成
             for (let i = 0; i < yokokuCount; i++) {
-                const yokokuImage = GameImage.getOjamaImage(yokoku);
+                const yokokuImage = GameImage.getYokokuImage(yokoku);
                 yokokuImage.style.top = Config.puyoImageHeight * 0.1 + 'px';
                 yokokuImage.style.left = yokokuLeft + 'px';
                 Stage.yokokuElements.push(yokokuImage);

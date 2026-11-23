@@ -12,7 +12,7 @@ class Config {
     static stageBackgroundColor = '#11213b';
     static nextBackgroundColor = '#e2a9c8';
     static scoreBackgroundColor = '#24c0bb';
-    static ojamaBackgroundColor = '#7e97cc'
+    static yokokuBackgroundColor = '#7e97cc'
 
     
     // static initialBoard = [

@@ -2,7 +2,7 @@ class GameImage {
     static puyoImageList = null;
     static edgeImageList = null;
     static positionImageList = null;
-    static ojamaImageList = null;
+    static yokokuImageList = null;
     static randomNumbersList = null;
     static digitImageList = null;
     static batankyuImage = null;
@@ -60,9 +60,9 @@ class GameImage {
         }
 
         // おじゃまぷよ予告の画像
-        GameImage.ojamaImageList = [];
+        GameImage.yokokuImageList = [];
         for (let i = 0; i < Config.yokokuTable.length; i++) {
-            const image = document.getElementById("ojama_" + (i+1));
+            const image = document.getElementById("yokoku_" + (i+1));
             image.removeAttribute('id');
 
             image.height = Config.puyoImageHeight;
@@ -75,7 +75,7 @@ class GameImage {
                 // image.height = Config.puyoImageHeight;
             }
             image.style.position = 'absolute';
-            GameImage.ojamaImageList[i] = image;
+            GameImage.yokokuImageList[i] = image;
         }
 
         //
@@ -115,8 +115,8 @@ class GameImage {
         return image;
     }
     
-    static getOjamaImage(yokoku) {
-        const image = GameImage.ojamaImageList[yokoku].cloneNode(true);
+    static getYokokuImage(yokoku) {
+        const image = GameImage.yokokuImageList[yokoku].cloneNode(true);
         return image;
     }
     //
