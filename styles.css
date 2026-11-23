@@ -32,7 +32,9 @@ body {
     border: none;
     align-items: center;
     justify-content: center;
-    background-color: rgba(238, 238, 238, 0.8);
+    background-color: #eee;
+    opacity: 0.8;
+    /* background-color: rgba(238, 238, 238, 0.8); */
 }
 
 .threeBtns {
@@ -116,6 +118,10 @@ body {
 
 #next2nd {
     position: absolute;
+}
+
+#yokoku {
+    position: relative;
 }
 
 /* 縦向き・横向きに応じて表示 */
