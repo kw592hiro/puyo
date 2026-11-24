@@ -43,7 +43,8 @@ function levelSetting(numColors) {
     }, 300);
 
     resetInitialize();
-    Config.puyoColorMax = numColors;
+    // Config.puyoColorMax = numColors;
+    colorLevel = numColors;
     Stage.initialize();
     Stage.stageElement.style.backgroundImage = 
         `linear-gradient(rgba(0,0,0,0.0),rgba(0,0,0,0.8)), 
@@ -132,6 +133,7 @@ function startGame() {
 // }
 
 
+let colorLevel = 0;
 let gameState;
 let frame;
 let comboCount = 0;
@@ -198,12 +200,6 @@ function gameLoop() {
                 comboCount++;
                 //
                 Score.addComboScore(comboCount, eraseInfo.piece, eraseInfo.color);
-                
-                // おじゃまぷよ数計算（連鎖中）
-                const ojamaCount = Score.calculateOjama();
-                ojamaComboTotal += ojamaCount;
-                // 予告ぷよ表示
-                Stage.createYokoku(ojamaComboTotal);
 
                 Stage.hideZenkeshi();
             } else {
@@ -223,6 +219,13 @@ function gameLoop() {
         case "erasingPuyo":
             //
             if (!Stage.erasePuyo(frame)) {
+                
+                // おじゃまぷよ数計算（連鎖中）
+                const ojamaCount = Score.calculateOjama();
+                ojamaComboTotal += ojamaCount;
+                // 予告ぷよ表示
+                Stage.createYokoku(ojamaComboTotal);
+                
                 //
                 gameState = "checkFallingPuyo";
             }

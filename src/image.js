@@ -28,8 +28,8 @@ class GameImage {
         for (let i = 0;  i < Config.puyoColorMax; i++) {
             const image = document.getElementById("edge_" + (i+1));
             image.removeAttribute('id');
-            image.width = Config.puyoImageWidth;
-            image.height = Config.puyoImageHeight;
+            image.width = Config.puyoImageWidth * 1.2;
+            image.height = Config.puyoImageHeight * 1.2;
             image.style.position = 'absolute';
             GameImage.edgeImageList[i] = image;
         }

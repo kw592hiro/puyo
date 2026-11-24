@@ -20,6 +20,7 @@ class Player {
     static rotateFromRotation = 0;
     static dummyQtTop = 0;
     static groundedFlag = false;
+    static clickStartFrame = 0;
 
     static initialize() {
         //
@@ -29,7 +30,9 @@ class Player {
             down: false,
             ccw: false,
             cw: false,
-            quick: false
+            quick: false,
+
+            doubleClick: 0
         };
 
         // 積んであるぷよの最上段の配列
@@ -396,6 +399,10 @@ class Player {
 
         //
         Player.setPlayerPuyoPosition(frame);
+
+        // クイックターンのためのダブルクリックフラグをリセット
+        Player.keyStatus.doubleClick = 0;
+        
         return true;
     }
 
@@ -423,8 +430,8 @@ class Player {
         Player.centerPuyoElement.style.left = Player.playerPuyoStatus.left + "px";
         Player.centerPuyoElement.style.top = Player.playerPuyoStatus.top + "px";
 
-        Player.centerEdgeElement.style.left = Player.playerPuyoStatus.left + "px";
-        Player.centerEdgeElement.style.top = Player.playerPuyoStatus.top + "px";
+        Player.centerEdgeElement.style.left = Player.playerPuyoStatus.left - Config.puyoImageWidth * 0.1 + "px";
+        Player.centerEdgeElement.style.top = Player.playerPuyoStatus.top - Config.puyoImageHeight * 0.1 + "px";
 
         // 軸ぷよの輪郭線を点滅させる
         Player.centerEdgeElement.style.opacity = (1 + Math.sin(2 * Math.PI * frame / Config.edgePeriod)) / 2;
@@ -751,6 +758,28 @@ class Player {
                 //     return "rotatingCw";
                 // }
             }
+
+            // // ダブルクリックでクイックターンを実現
+            // // 回転不可だったときにダブルクリックを確認
+            // if (!canRotate) {
+            //     if (Player.keyStatus.doubleClick === 0) {
+            //         Player.keyStatus.doubleClick = 1;
+            //         Player.clickStartFrame = frame;
+
+            //     } else if (Player.keyStatus.doubleClick === 1) {
+            //         if (!Player.keyStatus.ccw) {
+            //             Player.keyStatus.doubleClick = 2;
+            //         }
+
+            //     } else if (Player.keyStatus.doubleClick === 2) {
+            //         const clickInterval = frame - Player.clickStartFrame;
+            //         if (clickInterval < 30) {
+
+            //             console.log("Quick Turn");
+
+            //         }
+            //     }
+            // }
         }
 
         // 横移動ボタンが押された場合の処理：回転判定の後に移動可能か判定
@@ -834,6 +863,11 @@ class Player {
             }
         }
 
+
+        // ここに挿入したらおかしくなった
+        // Player.keyStatus.ccw = false;
+        
+        
         // 横移動と回転の単独/同時操作に応じてgameStateを選択
         const gameStateArray = [[["playing", "playing"], ["rotatingCw", "rotatingCcw"]], [["moving", "moving"], ["movingAndCw", "movingAndCcw"]]];
         return gameStateArray[canMove ? 1 : 0][canRotate ? 1 : 0][Player.keyStatus.ccw ? 1 : 0];

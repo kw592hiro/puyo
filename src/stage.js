@@ -127,8 +127,8 @@ class Stage {
             }
             //
         } else {
-            const nextCenterPuyoColor = Math.trunc(Math.random() * Config.puyoColorMax) + 1;
-            const nextRotatingPuyoColor = Math.trunc(Math.random() * Config.puyoColorMax) + 1;
+            const nextCenterPuyoColor = Math.trunc(Math.random() * colorLevel) + 1;
+            const nextRotatingPuyoColor = Math.trunc(Math.random() * colorLevel) + 1;
             Stage.nextPuyoColors = [nextCenterPuyoColor, nextRotatingPuyoColor];
         };
 
@@ -144,8 +144,8 @@ class Stage {
     static getNext2ndPuyoColors() {
         const ret2nd = Stage.next2ndPuyoColors;
 
-        const next2ndCenterPuyoColor = Math.trunc(Math.random() * Config.puyoColorMax) + 1;
-        const next2ndRotatingPuyoColor = Math.trunc(Math.random() * Config.puyoColorMax) + 1;
+        const next2ndCenterPuyoColor = Math.trunc(Math.random() * colorLevel) + 1;
+        const next2ndRotatingPuyoColor = Math.trunc(Math.random() * colorLevel) + 1;
         Stage.next2ndPuyoColors = [next2ndCenterPuyoColor, next2ndRotatingPuyoColor];
 
         if (ret2nd) {
