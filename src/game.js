@@ -135,6 +135,7 @@ function startGame() {
 
 let colorLevel = 0;
 let gameState;
+let controllingState;
 let frame;
 let comboCount = 0;
 let ojamaComboTotal = 0
@@ -159,6 +160,10 @@ function initialize() {
     //
     isGameStart = false;
     gameState = "start";
+    controllingState = {
+        moving: false,
+        rotating: 0
+    }
     //
     frame = 0;
     frameBatankyu = 0;
@@ -169,9 +174,6 @@ function initialize() {
 }
 
 function gameLoop() {
-    let finishMove = null;
-    let finishRotate = null;
-
     switch (gameState) {
         case "start":
             //
@@ -251,49 +253,9 @@ function gameLoop() {
             //
             gameState = "checkFallingPuyo";
             break;
-        case "moving":
-            Player.dropPlayerPuyo(Player.keyStatus.down);
-            //
-            if (Player.movePlayerPuyo(frame)) {
-                //
-                gameState = "playing";
-            }
-            break;
-        case "rotatingCcw":
-            Player.dropPlayerPuyo(Player.keyStatus.down);
-            if (Player.rotatePlayerPuyo(frame, 1)) {
-                //
-                gameState = "playing";
-            }
-            break;
-        case "rotatingCw":
-            Player.dropPlayerPuyo(Player.keyStatus.down);
-            if (Player.rotatePlayerPuyo(frame, -1)) {
-                //
-                gameState = "playing";
-            }
-            break;
-        case "movingAndCcw":
-            // Player.dropPlayerPuyo(Player.keyStatus.down);
-
-            finishMove = Player.movePlayerPuyo(frame);
-            finishRotate = Player.rotatePlayerPuyo(frame, 1);
-            Player.dropPlayerPuyo(Player.keyStatus.down);
-
-            if (finishMove && finishRotate) {
-                gameState = "playing";
-            }
-            break;
-        case "movingAndCw":
-            // Player.dropPlayerPuyo(Player.keyStatus.down);
-
-            finishMove = Player.movePlayerPuyo(frame);
-            finishRotate = Player.rotatePlayerPuyo(frame, -1);
-            Player.dropPlayerPuyo(Player.keyStatus.down);
-
-            if (finishMove && finishRotate) {
-                gameState = "playing";
-            }
+        case "controlling":
+            Player.playerPuyoControlling(frame);
+            gameState = Player.update(frame);
             break;
         case "quickTurn":
             if (Player.quickTurnPuyo(frame)) {
@@ -301,14 +263,22 @@ function gameLoop() {
             }
             break;
         case "gameOver":
-            GameImage.prepareBatankyuAnimation(frame);
-            gameState = "batankyu";
+            // GameImage.prepareBatankyuAnimation(frame);
+            GameImage.gameOverFrame = frame;
+            
+            // ばたんきゅー表示を少し遅らせる
+            frameBatankyu++;
+            if (frameBatankyu > 40) {
+                Stage.stageElement.appendChild(GameImage.batankyuImage);
+                GameImage.updateBatankyu(frame);
+                gameState = "batankyu";
+            }
             break;
         case "batankyu":
             frameBatankyu++;
             GameImage.updateBatankyu(frame);
             
-            if (frameBatankyu > 60) {
+            if (frameBatankyu > 120) {
                 document.getElementById("resetBtn").style.display = "block";
                 gameState = "batankyu2"
             };

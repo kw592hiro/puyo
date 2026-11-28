@@ -82,183 +82,6 @@ class Player {
             }
         });
 
-
-    // スマホのタッチ対応
-    //     let pageX = 0, pageY = 0;
-    //     //
-    //     document.addEventListener("touchstart", (event) => {
-    //         //
-    //         const touch = event.touches[0];
-    //         pageX = touch.pageX;
-    //         pageY = touch.pageY;
-    //     });
-    //     //
-    //     document.addEventListener("touchmove", (event) => {
-    //         //
-    //         let {left, right, up, down} = Player.keyStatus;
-    //         //
-    //         if (left || right || down|| ccw || cw ) {
-    //             return;
-    //         }
-    //         //
-    //         const touch = event.touches[0];
-    //         const dx = touch.pageX - pageX;
-    //         const dy = touch.pageY - pageY;
-    //         if (dx**2 + dy**2 < 5**2) {
-    //             //
-    //             return;
-    //         }
-    //         //
-    //         if (Math.abs(dx) > Math.abs(dy)) {
-    //             if (dx > 0) {
-    //                 right = true;
-    //             } else {
-    //                 left = true;
-    //             }
-    //         } else {
-    //             if (dy > 0) {
-    //                 down = true;
-    //             } else {
-    //                 ccw = true;
-    //             }
-    //         }
-    //         Player.keyStatus = { left, right, down, ccw, cw };
-    //     });
-    //     //
-    //     document.addEventListener("touchend", (event) => {
-    //         Player.keyStatus = {
-    //             left: false,
-    //             right: false,
-    //             down: false,
-    //             ccw: false,
-    //             cw: false
-    //         };
-    //     });
-
-        // // ボタン操作対応
-        // document.getElementById("btnLeft").addEventListener("mousedown", () => {
-        //     Player.keyStatus.left = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnLeft").addEventListener("mouseup", () => {
-        //     Player.keyStatus.left = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnRight").addEventListener("mousedown", () => {
-        //     Player.keyStatus.right = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnRight").addEventListener("mouseup", () => {
-        //     Player.keyStatus.right = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnDown").addEventListener("mousedown", () => {
-        //     Player.keyStatus.down = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnDown").addEventListener("mouseup", () => {
-        //     Player.keyStatus.down = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnCcw").addEventListener("mousedown", () => {
-        //     Player.keyStatus.ccw = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnCcw").addEventListener("mouseup", () => {
-        //     Player.keyStatus.ccw = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnCw").addEventListener("mousedown", () => {
-        //     Player.keyStatus.cw = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnCw").addEventListener("mouseup", () => {
-        //     Player.keyStatus.cw = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnQuick").addEventListener("mousedown", () => {
-        //     Player.keyStatus.quick = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnQuick").addEventListener("mouseup", () => {
-        //     Player.keyStatus.quick = false;
-        //     document.preventDefault;
-        // });
-
-        // // タッチでボタン操作対応
-        // document.getElementById("btnLeft").addEventListener("touchstart", () => {
-        //     Player.keyStatus.left = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnLeft").addEventListener("touchend", () => {
-        //     Player.keyStatus.left = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnRight").addEventListener("touchstart", () => {
-        //     Player.keyStatus.right = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnRight").addEventListener("touchend", () => {
-        //     Player.keyStatus.right = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnDown").addEventListener("touchstart", () => {
-        //     Player.keyStatus.down = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnDown").addEventListener("touchend", () => {
-        //     Player.keyStatus.down = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnCcw").addEventListener("touchstart", () => {
-        //     Player.keyStatus.ccw = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnCcw").addEventListener("touchend", () => {
-        //     Player.keyStatus.ccw = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnCw").addEventListener("touchstart", () => {
-        //     Player.keyStatus.cw = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnCw").addEventListener("touchend", () => {
-        //     Player.keyStatus.cw = false;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnQuick").addEventListener("touchstart", () => {
-        //     Player.keyStatus.quick = true;
-        //     document.preventDefault;
-        // });
-
-        // document.getElementById("btnQuick").addEventListener("touchend", () => {
-        //     Player.keyStatus.quick = false;
-        //     document.preventDefault;
-        // });
-
-    
-
     // Pointer Eventを用いて、PC・スマホ両対応
         document.getElementById("btnLeft").addEventListener("pointerdown", () => {
             Player.keyStatus.left = true;
@@ -463,13 +286,15 @@ class Player {
     }
 
     //
-    static dropPlayerPuyo(isPressingDown) {
+    static dropPlayerPuyo(frame, isPressingDown) {
         let {x, y, dx, dy} = Player.playerPuyoStatus;
 
         //
         if (!Stage.getPuyoInfo(x, y+1) && !Stage.getPuyoInfo(x+dx, y+dy+1)) {
-            //
-            Player.playerPuyoStatus.top += Config.playerFallingSpeed;
+            // 数フレームに1回、ぷよを落下させ、カクカク落下
+            if (frame % Config.dropFrames === 0) {
+                Player.playerPuyoStatus.top += Config.playerFallingSpeed * Config.dropFrames;
+            }
             
             if (isPressingDown) {
                 Player.playerPuyoStatus.top += Config.playerDownSpeed;
@@ -499,8 +324,6 @@ class Player {
             } else {
                 //
 
-                // ここで回し時の接地時間がリセットされている
-                // Player.groundedFrame = 0;
                 Player.groundedFlag = false;
                 return false;
             }
@@ -536,14 +359,16 @@ class Player {
     }
 
     // クイックターン用の自由落下
-    static dropPlayerPuyoQT(isPressingDown) {
-        let {x, y, dy} = Player.playerPuyoStatus;
+    static dropPlayerPuyoQT(frame, isPressingDown) {
+        let {x, y} = Player.playerPuyoStatus;
 
         //
         // if (!Stage.getPuyoInfo(x, y+1) && !Stage.getPuyoInfo(x, y+dy+1)) {
         if (!Stage.getPuyoInfo(x, y+1)) {
             //
-            Player.dummyQtTop += Config.playerFallingSpeed;
+            if (frame % Config.dropFrames === 0) {
+                Player.dummyQtTop += Config.playerFallingSpeed * Config.dropFrames;
+            }
             
             if (isPressingDown) {
                 Player.dummyQtTop += Config.playerDownSpeed;
@@ -609,21 +434,64 @@ class Player {
     }
 
 
-    //
-    static update(frame) {
-        //
-        if (Player.dropPlayerPuyo(Player.keyStatus.down)) {
-            //
-            return "fix";
-        }
-        //
-        Player.setPlayerPuyoPosition(frame);
+    // 横移動ルーチン
+    static detectMove() {
+        // let canMove = false;
 
-        let canMove = false;
-        let canRotate = false;
-        
-        
-        // 回転ボタンが押された場合の処理：横移動より先に回転可能か判定
+        // 横移動ボタンが押された場合の処理
+        if (Player.keyStatus.right || Player.keyStatus.left) {
+            //
+            const mx = (Player.keyStatus.right) ? 1 : -1;
+            const cx = Player.playerPuyoStatus.x;
+            const cy = Player.playerPuyoStatus.y;
+            const rx = cx + Player.playerPuyoStatus.dx;
+            const ry = cy + Player.playerPuyoStatus.dy;
+
+            //
+            let canMove = true;
+            // canMove = true;
+
+            //
+            if (Stage.getPuyoInfo(cx + mx, cy)) {
+                //
+                canMove = false;
+            }
+            //
+            if (Stage.getPuyoInfo(rx + mx, ry)) {
+                //
+                canMove = false;
+            }
+            //
+            // if (Player.groundedFrame === 0) {
+            if (!Player.groundedFlag) {
+                //
+                if (Stage.getPuyoInfo(cx + mx, cy + 1)) {
+                    //
+                    canMove = false;
+                }
+                //
+                if (Stage.getPuyoInfo(rx + mx, ry+1)) {
+                    //
+                    canMove = false;
+                }
+            }
+
+            if (canMove) {
+                //
+                Player.moveStartFrame = frame;
+                Player.moveSource = cx * Config.puyoImageWidth;
+                Player.moveDestination = (cx + mx) *  Config.puyoImageWidth;
+                Player.playerPuyoStatus.x += mx;
+                // return "moving";
+
+                controllingState.moving = true;
+            }
+        }
+    }
+
+    // 回転ルーチン
+    static detectRotate() {
+        // 回転ボタンが押された場合の処理
         if (Player.keyStatus.ccw || Player.keyStatus.cw) {
             //
             const x = Player.playerPuyoStatus.x;
@@ -631,13 +499,16 @@ class Player {
             // const y = Player.playerPuyoStatus.y + (Player.groundedFrame === 0 ? 1 : 0);
             const y = Player.playerPuyoStatus.y + (!Player.groundedFlag ? 1 : 0);
             const rotation = Player.playerPuyoStatus.rotation;
-            // let canRotate = true;
-            canRotate = true;
+            let canRotate = true;
+            // canRotate = true;
 
             let cx = 0;
             let cy = 0;
+            let rotateDirection = 0;
 
             if (Player.keyStatus.ccw) {
+                rotateDirection = 1;
+
                 if (rotation === 0) {
                     //
                 } else if (rotation === 90) {
@@ -677,6 +548,8 @@ class Player {
                     }
                 }
             } else {
+                rotateDirection = -1;
+
                 if (rotation === 180) {
                     //
                 } else if (rotation === 90) {
@@ -743,20 +616,13 @@ class Player {
                 //
                 Player.playerPuyoStatus.x += cx;
 
-                if (Player.keyStatus.ccw) {
-                    Player.nextRotation = (Player.playerPuyoStatus.rotation + 90) % 360;
-                } else {
-                    Player.nextRotation = (Player.playerPuyoStatus.rotation + 270) % 360;
-                }
+                Player.nextRotation = (Player.playerPuyoStatus.rotation + rotateDirection * 90 + 360) % 360;
+                
                 const dCombi = [[1, 0], [0, -1], [-1, 0], [0, 1]][Player.nextRotation / 90];
                 Player.playerPuyoStatus.dx = dCombi[0];
                 Player.playerPuyoStatus.dy = dCombi[1];
 
-                // if (Player.keyStatus.ccw) {
-                //     return "rotatingCcw";
-                // } else {
-                //     return "rotatingCw";
-                // }
+                controllingState.rotating = rotateDirection;
             }
 
             // // ダブルクリックでクイックターンを実現
@@ -781,56 +647,10 @@ class Player {
             //     }
             // }
         }
+    }
 
-        // 横移動ボタンが押された場合の処理：回転判定の後に移動可能か判定
-        if (Player.keyStatus.right || Player.keyStatus.left) {
-            //
-            const mx = (Player.keyStatus.right) ? 1 : -1;
-            const cx = Player.playerPuyoStatus.x;
-            const cy = Player.playerPuyoStatus.y;
-            const rx = cx + Player.playerPuyoStatus.dx;
-            const ry = cy + Player.playerPuyoStatus.dy;
-
-            //
-            // let canMove = true;
-            canMove = true;
-
-            //
-            if (Stage.getPuyoInfo(cx + mx, cy)) {
-                //
-                canMove = false;
-            }
-            //
-            if (Stage.getPuyoInfo(rx + mx, ry)) {
-                //
-                canMove = false;
-            }
-            //
-            // if (Player.groundedFrame === 0) {
-            if (!Player.groundedFlag) {
-                //
-                if (Stage.getPuyoInfo(cx + mx, cy + 1)) {
-                    //
-                    canMove = false;
-                }
-                //
-                if (Stage.getPuyoInfo(rx + mx, ry+1)) {
-                    //
-                    canMove = false;
-                }
-            }
-
-            if (canMove) {
-                //
-                Player.moveStartFrame = frame;
-                Player.moveSource = cx * Config.puyoImageWidth;
-                Player.moveDestination = (cx + mx) *  Config.puyoImageWidth;
-                Player.playerPuyoStatus.x += mx;
-                // return "moving";
-            }
-
-        }
-
+    // クイックターンルーチン
+    static detectQuickTurn() {
         // クイックターンボタンが押された場合の処理：ターン可能か判定
         if (Player.keyStatus.quick) {
             const {x, y, dy} = Player.playerPuyoStatus;
@@ -862,24 +682,72 @@ class Player {
                 return "quickTurn";
             }
         }
-
-
-        // ここに挿入したらおかしくなった
-        // Player.keyStatus.ccw = false;
-        
-        
-        // 横移動と回転の単独/同時操作に応じてgameStateを選択
-        const gameStateArray = [[["playing", "playing"], ["rotatingCw", "rotatingCcw"]], [["moving", "moving"], ["movingAndCw", "movingAndCcw"]]];
-        return gameStateArray[canMove ? 1 : 0][canRotate ? 1 : 0][Player.keyStatus.ccw ? 1 : 0];
-        
-        // return "playing";
     }
 
+
+    // 横移動 and/or 回転の処理
+    static playerPuyoControlling(frame) {
+        // // まず落下
+        // Player.dropPlayerPuyo(frame, Player.keyStatus.down);
+
+        // 横移動
+        if (controllingState.moving) {
+            if (Player.movePlayerPuyo(frame)) {
+                //
+                controllingState.moving = false;
+                // gameState = "playing";
+            }
+        }
+        
+        // 回転
+        if (controllingState.rotating) {
+            if (Player.rotatePlayerPuyo(frame, controllingState.rotating)) {
+                //
+                controllingState.rotating = 0;
+                // gameState = "playing";
+            }
+        }
+
+        Player.setPlayerPuyoPosition(frame);
+    }
+
+
+    //
+    static update(frame) {
+        //
+        if (Player.dropPlayerPuyo(frame, Player.keyStatus.down)) {
+            //
+            return "fix";
+        }
+        //
+        Player.setPlayerPuyoPosition(frame);
+
+        // クイックターン可能か判定
+        const tempGameState = Player.detectQuickTurn();
+        if (tempGameState === "quickTurn") {
+            return tempGameState
+        }
+
+        // 横移動中でない場合、横移動可能か判定
+        if (!controllingState.moving) {
+            Player.detectMove();
+        }
+
+        // 回転中でない場合、回転可能か判定
+        if (!controllingState.rotating) {
+            Player.detectRotate();
+        }
+        
+        // 判定結果に応じて、状態を決定
+        if (controllingState.moving || controllingState.rotating) {
+            return "controlling";
+        }
+        return "playing";
+    }
 
     // 横移動のアニメーション
     static movePlayerPuyo(frame) {
         //
-        // Player.dropPlayerPuyo(false);
         // Player.dropPlayerPuyo(Player.keyStatus.down);
 
         //
@@ -895,15 +763,10 @@ class Player {
             //
             ratio2 = 1;
         }
-        // Player.playerPuyoStatus.left = (Player.moveDestination - Player.moveSource) * ratio + Player.moveSource;
+        Player.playerPuyoStatus.left = (Player.moveDestination - Player.moveSource) * ratio2 + Player.moveSource;
 
-        // 横移動＆壁際回転の場合、x座標(left)はrotateで計算する
-        if (Player.rotateAfterLeft === Player.rotateBeforeLeft) {
-            Player.playerPuyoStatus.left = (Player.moveDestination - Player.moveSource) * ratio2 + Player.moveSource;
-        }
-        
         //
-        Player.setPlayerPuyoPosition(frame);
+        // Player.setPlayerPuyoPosition(frame);
 
         if (ratio === 1) {
             //
@@ -915,7 +778,6 @@ class Player {
     // 回転のアニメーション
     static rotatePlayerPuyo(frame, rotateDirection) {
         //
-        // Player.dropPlayerPuyo(false);
         // Player.dropPlayerPuyo(Player.keyStatus.down);
 
         //
@@ -926,13 +788,13 @@ class Player {
         }
         Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + rotateDirection * ratio * 90 +360) % 360;
         
-        // x座標(left)は、壁際での回転の場合はここで計算するが、回転&横移動の場合はmoveで計算済
+        // // x座標(left)は、壁際での回転の場合はここで計算するが、回転&横移動の場合はmoveで計算済
         if (Player.rotateAfterLeft != Player.rotateBeforeLeft) {
             Player.playerPuyoStatus.left = (Player.rotateAfterLeft - Player.rotateBeforeLeft) * ratio + Player.rotateBeforeLeft;
         }
 
         //
-        Player.setPlayerPuyoPosition(frame);
+        // Player.setPlayerPuyoPosition(frame);
 
         if (ratio === 1) {
             //
@@ -944,7 +806,6 @@ class Player {
     // クイックターンのアニメーション
     static quickTurnPuyo(frame) {
         // クイックターン中も自由落下させる
-        // Player.dropPlayerPuyoQT(false);
         // Player.dropPlayerPuyoQT(Player.keyStatus.down);
 
         const rotateDirection = 1;
@@ -953,17 +814,16 @@ class Player {
             //
             ratio = 1;
         }
-
         
         if (Player.playerPuyoStatus.dy === 1) {
             // 子ぷよが上の場合：軸ぷよを中心に通常の回転
             // 通常の自由落下
-            Player.dropPlayerPuyo(Player.keyStatus.down);
+            Player.dropPlayerPuyo(frame, Player.keyStatus.down);
             Player.playerPuyoStatus.rotation = (Player.rotateFromRotation + rotateDirection * ratio * 180 +360) % 360;
         } else {
             // 子ぷよが下の場合：軸ぷよと入れ替え
             // クイックターン用の自由落下
-            Player.dropPlayerPuyoQT(Player.keyStatus.down);
+            Player.dropPlayerPuyoQT(frame, Player.keyStatus.down);
             // 軸ぷよの座標回転
             // const playerPuyoCenter = Player.dummyQtTop + Player.playerPuyoStatus.dy * Config.puyoImageHeight / 2;
             const playerPuyoCenter = Player.dummyQtTop + Config.puyoImageHeight / 2;

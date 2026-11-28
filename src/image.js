@@ -131,14 +131,14 @@ class GameImage {
     }
 
     //
-    static prepareBatankyuAnimation(frame) {
-        //
-        GameImage.gameOverFrame = frame;
-        //
-        Stage.stageElement.appendChild(GameImage.batankyuImage);
-        //
-        GameImage.updateBatankyu(frame);
-    }
+    // static prepareBatankyuAnimation(frame) {
+    //     //
+    //     GameImage.gameOverFrame = frame;
+    //     //
+    //     Stage.stageElement.appendChild(GameImage.batankyuImage);
+    //     //
+    //     GameImage.updateBatankyu(frame);
+    // }
 
     //
     static updateBatankyu(frame) {
