@@ -365,7 +365,7 @@ class Player {
         //
         // if (!Stage.getPuyoInfo(x, y+1) && !Stage.getPuyoInfo(x, y+dy+1)) {
         if (!Stage.getPuyoInfo(x, y+1)) {
-            //
+            // 数フレームに1回、ぷよを落下させ、カクカク落下
             if (frame % Config.dropFrames === 0) {
                 Player.dummyQtTop += Config.playerFallingSpeed * Config.dropFrames;
             }
@@ -805,10 +805,9 @@ class Player {
 
     // クイックターンのアニメーション
     static quickTurnPuyo(frame) {
-        // クイックターン中も自由落下させる
-        // Player.dropPlayerPuyoQT(Player.keyStatus.down);
 
         const rotateDirection = 1;
+
         let ratio = (frame - Player.quickStartFrame) / Config.quickTurnFrames;
         if (ratio > 1) {
             //
